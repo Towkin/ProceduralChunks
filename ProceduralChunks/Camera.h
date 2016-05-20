@@ -11,6 +11,8 @@ private:
 	sf::Vector2f mVelocity;
 	sf::Vector2f mAspectRatio;
 	float mViewSize;
+	float mMaxViewSize;
+	float mMinViewSize;
 
 	bool mMouseIsHeld;
 	sf::Vector2i mMouseHeldLocation;

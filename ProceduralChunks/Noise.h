@@ -71,9 +71,9 @@ protected:
 	static float RawPerlinNoise(float x, float y, float z, const int aHash[]);
 
 public:
-	static float Value(float x, float aFrequency, unsigned int aSeed = 128) { return RawValueNoise(x * aFrequency, GetHash(aSeed)); }
-	static float Value(float x, float y, float aFrequency, unsigned int aSeed = 128) { return RawValueNoise(x * aFrequency, y * aFrequency, GetHash(aSeed)); }
-	static float Value(float x, float y, float z, float aFrequency, unsigned int aSeed = 128) { return RawValueNoise(x * aFrequency, y * aFrequency, z * aFrequency, GetHash(aSeed)); }
+	static float Value(float x, float aFrequency, unsigned int aSeed = 128);
+	static float Value(float x, float y, float aFrequency, unsigned int aSeed = 128);
+	static float Value(float x, float y, float z, float aFrequency, unsigned int aSeed = 128);
 
 	static float Value(float aCoords[], size_t aDimensions, float aFrequency, unsigned int aOctaves, unsigned int aSeed = 128, float aLacunarity = 2.f, float aPersistance = 0.5f);
 
@@ -82,9 +82,9 @@ public:
 	//static float Value(float x, float y, float z, float aFrequency, int aOctaves, unsigned int aSeed = 128, float aLacunarity = 2.f, float aPersistance = 0.5f);
 
 	
-	static float Perlin(float x, float aFrequency, unsigned int aSeed = 128) { return RawPerlinNoise(x * aFrequency, GetHash(aSeed)); }
-	static float Perlin(float x, float y, float aFrequency, unsigned int aSeed = 128) { return RawPerlinNoise(x * aFrequency, y * aFrequency, GetHash(aSeed)); }
-	static float Perlin(float x, float y, float z, float aFrequency, unsigned int aSeed = 128) { return RawPerlinNoise(x * aFrequency, y * aFrequency, z * aFrequency, GetHash(aSeed)); }
+	static float Perlin(float x, float aFrequency, unsigned int aSeed = 128);
+	static float Perlin(float x, float y, float aFrequency, unsigned int aSeed = 128);
+	static float Perlin(float x, float y, float z, float aFrequency, unsigned int aSeed = 128);
 	
 	static float Perlin(float aCoords[], size_t aDimensions, float aFrequency, unsigned int aOctaves, unsigned int aSeed = 128, float aLacunarity = 2.f, float aPersistance = 0.5f);
 	

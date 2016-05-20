@@ -5,7 +5,11 @@
 LayerChunk::LayerChunk() {}
 
 
-LayerChunk::~LayerChunk() {}
+LayerChunk::~LayerChunk() {
+	for (Chunk* SubChunk : mChunks) {
+		delete SubChunk;
+	}
+}
 
 void LayerChunk::SetChunksResolution(size_t aNewResolution) {
 	mChunksResolution = aNewResolution;
@@ -19,10 +23,9 @@ bool LayerChunk::ValidChunk(size_t aX, size_t aY) const {
 float Clamp(float value, float min, float max) {
 	return std::fminf(max, std::fmaxf(min, value));
 }
-#include <iostream>
 void LayerChunk::Draw(sf::RenderTarget* aRenderer, sf::FloatRect aRenderRect) {
-	if (GetSize() / aRenderRect.width > 1.5f ||
-		GetSize() / aRenderRect.height > 1.5f) {
+	if (GetSize() / aRenderRect.width > 1.25f ||
+		GetSize() / aRenderRect.height > 1.25f) {
 
 		size_t StartX = Clamp(
 			std::floorf((aRenderRect.left - GetX()) / GetChildSize()),

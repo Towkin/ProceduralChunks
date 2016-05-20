@@ -11,7 +11,7 @@ sf::Color LerpColors(sf::Color& aColorA, sf::Color& aColorB, float t) {
 	return sf::Color(Lerp(aColorA.r, aColorB.r, t), Lerp(aColorA.g, aColorB.g, t), Lerp(aColorA.b, aColorB.b, t), Lerp(aColorA.a, aColorB.a, t));
 }
 
-bool Chunk::sShouldLerpColors = false;
+const bool Chunk::sShouldLerpColors = false;
 
 sf::Image Chunk::GetMapColors() {
 	sf::Image ReturnImage;

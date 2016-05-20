@@ -6,6 +6,8 @@
 Camera::Camera(const sf::Window* aWindow) :
 	mWindow(aWindow),
 	mView(),
+	mMaxViewSize(100000.f),
+	mMinViewSize(5000.f),
 	mViewSize(100000.f)
 {
 	UpdateAspectRatio();
@@ -25,7 +27,7 @@ void Camera::UpdateAspectRatio() {
 }
 
 void Camera::SetViewSize(float aNewViewSize) {
-	mViewSize = aNewViewSize;
+	mViewSize = std::fmaxf(mMinViewSize, std::fminf(mMaxViewSize, aNewViewSize));
 	mView.setSize(GetViewSize() * mAspectRatio);
 }
 void Camera::Update() {

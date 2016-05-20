@@ -432,17 +432,29 @@ float Noise::RawPerlinNoise(float x, float y, float z, const int aHash[]) {
 	) / 2.f + 0.5f;
 }
 
+float Noise::Value(float x, float aFrequency, unsigned int aSeed) {
+	return RawValueNoise(x * aFrequency, GetHash(aSeed));
+}
+
+float Noise::Value(float x, float y, float aFrequency, unsigned int aSeed) {
+	return RawValueNoise(x * aFrequency, y * aFrequency, GetHash(aSeed));
+}
+
+float Noise::Value(float x, float y, float z, float aFrequency, unsigned int aSeed) {
+	return RawValueNoise(x * aFrequency, y * aFrequency, z * aFrequency, GetHash(aSeed));
+}
+
 float Noise::Value(float aCoords[], size_t aDimensions, float aFrequency, unsigned int aOctaves, unsigned int aSeed, float aLacunarity, float aPersistance) {
 	float Sum = 0.f;
 	switch (aDimensions) {
 		case 1:
-			Sum = Value(aCoords[0], aCoords[1], aFrequency, aSeed);
+			Sum = Value(aCoords[0], aFrequency, aSeed);
 			break;
 		case 2:
 			Sum = Value(aCoords[0], aCoords[1], aFrequency, aSeed);
 			break;
 		case 3:
-			Sum = Value(aCoords[0], aCoords[1], aFrequency, aSeed);
+			Sum = Value(aCoords[0], aCoords[1], aCoords[2], aFrequency, aSeed);
 			break;
 		default:
 			break;
@@ -458,13 +470,13 @@ float Noise::Value(float aCoords[], size_t aDimensions, float aFrequency, unsign
 		
 		switch (aDimensions) {
 			case 1:
-				Sum += Value(aCoords[0], aCoords[1], aFrequency, aSeed) * Amplitude;
+				Sum += Value(aCoords[0], aFrequency, aSeed) * Amplitude;
 				break;
 			case 2:
 				Sum += Value(aCoords[0], aCoords[1], aFrequency, aSeed) * Amplitude;
 				break;
 			case 3:
-				Sum += Value(aCoords[0], aCoords[1], aFrequency, aSeed) * Amplitude;
+				Sum += Value(aCoords[0], aCoords[1], aCoords[2], aFrequency, aSeed) * Amplitude;
 				break;
 			default:
 				break;
@@ -474,17 +486,29 @@ float Noise::Value(float aCoords[], size_t aDimensions, float aFrequency, unsign
 	return Sum / Range;
 }
 
+float Noise::Perlin(float x, float aFrequency, unsigned int aSeed) {
+	return RawPerlinNoise(x * aFrequency, GetHash(aSeed));
+}
+
+float Noise::Perlin(float x, float y, float aFrequency, unsigned int aSeed) {
+	return RawPerlinNoise(x * aFrequency, y * aFrequency, GetHash(aSeed));
+}
+
+float Noise::Perlin(float x, float y, float z, float aFrequency, unsigned int aSeed) {
+	return RawPerlinNoise(x * aFrequency, y * aFrequency, z * aFrequency, GetHash(aSeed));
+}
+
 float Noise::Perlin(float aCoords[], size_t aDimensions, float aFrequency, unsigned int aOctaves, unsigned int aSeed, float aLacunarity, float aPersistance) {
 	float Sum = 0.f;
 	switch (aDimensions) {
 		case 1:
-			Sum = Perlin(aCoords[0], aCoords[1], aFrequency, aSeed);
+			Sum = Perlin(aCoords[0], aFrequency, aSeed);
 			break;
 		case 2:
 			Sum = Perlin(aCoords[0], aCoords[1], aFrequency, aSeed);
 			break;
 		case 3:
-			Sum = Perlin(aCoords[0], aCoords[1], aFrequency, aSeed);
+			Sum = Perlin(aCoords[0], aCoords[1], aCoords[2], aFrequency, aSeed);
 			break;
 		default:
 			break;
@@ -500,13 +524,13 @@ float Noise::Perlin(float aCoords[], size_t aDimensions, float aFrequency, unsig
 
 		switch (aDimensions) {
 			case 1:
-				Sum += Perlin(aCoords[0], aCoords[1], aFrequency, aSeed) * Amplitude;
+				Sum += Perlin(aCoords[0], aFrequency, aSeed) * Amplitude;
 				break;
 			case 2:
 				Sum += Perlin(aCoords[0], aCoords[1], aFrequency, aSeed) * Amplitude;
 				break;
 			case 3:
-				Sum += Perlin(aCoords[0], aCoords[1], aFrequency, aSeed) * Amplitude;
+				Sum += Perlin(aCoords[0], aCoords[1], aCoords[2], aFrequency, aSeed) * Amplitude;
 				break;
 			default:
 				break;

@@ -11,7 +11,7 @@ class Chunk
 public:
 	enum DataType { Height, Dryness };
 
-	static bool sShouldLerpColors;
+	const static bool sShouldLerpColors;
 
 private:
 	float mX, mY;
