@@ -3,15 +3,15 @@
 #include "SFML/Window/Keyboard.hpp"
 #include <math.h>
 
-Camera::Camera(const sf::Window* aWindow) :
+Camera::Camera(const sf::Window* aWindow, float aWorldSize) :
 	mWindow(aWindow),
 	mView(),
-	mMaxViewSize(100000.f),
-	mMinViewSize(5000.f),
-	mViewSize(100000.f)
+	mMaxViewSize(aWorldSize),
+	mMinViewSize(1000.f),
+	mViewSize(aWorldSize)
 {
 	UpdateAspectRatio();
-	mView.setCenter(50000.f, 50000.f);
+	mView.setCenter(aWorldSize / 2, aWorldSize / 2);
 }
 
 Camera::~Camera() {}

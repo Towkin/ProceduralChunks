@@ -1,6 +1,7 @@
 #include "LayerChunk.h"
 #include "ChunkFactory.h"
 
+bool LayerChunk::sUglyHasLoaded = false;
 
 LayerChunk::LayerChunk() {}
 
@@ -24,8 +25,12 @@ float Clamp(float value, float min, float max) {
 	return std::fminf(max, std::fmaxf(min, value));
 }
 void LayerChunk::Draw(sf::RenderTarget* aRenderer, sf::FloatRect aRenderRect) {
-	if (GetSize() / aRenderRect.width > 1.25f ||
-		GetSize() / aRenderRect.height > 1.25f) {
+	
+	Chunk::Draw(aRenderer, aRenderRect);
+	
+	
+	if ((aRenderer->getSize().x / GetResolution()) * (GetSize() / aRenderRect.width) > 1.5f ||
+		(aRenderer->getSize().y / GetResolution()) * (GetSize() / aRenderRect.height) > 1.5f) {
 
 		size_t StartX = Clamp(
 			std::floorf((aRenderRect.left - GetX()) / GetChildSize()),
@@ -47,19 +52,21 @@ void LayerChunk::Draw(sf::RenderTarget* aRenderer, sf::FloatRect aRenderRect) {
 
 		for (size_t x = StartX; x < EndX; x++) {
 			for (size_t y = StartY; y < EndY; y++) {
-				GetChunk(x, y)->Draw(aRenderer, aRenderRect);
+				Chunk* DrawChunk = GetChunk(x, y);
+				if (DrawChunk) {
+					DrawChunk->Draw(aRenderer, aRenderRect);
+				}
 			}
 		}
-	} else {
-		Chunk::Draw(aRenderer, aRenderRect);
 	}
 }
 
 Chunk* LayerChunk::GetChunk(size_t aX, size_t aY) {
 	Chunk* ReturnChunk;
 	if (ValidChunk(aX, aY)) {
-		if (mChunks[aX + GetChunksResolution() * aY] == nullptr) {
+		if (mChunks[aX + GetChunksResolution() * aY] == nullptr && !sUglyHasLoaded) {
 			mChunks[aX + GetChunksResolution() * aY] = ChunkFactory::GenerateChunk(GetX() + aX * GetChildSize(), GetY() + aY * GetChildSize(), GetChildSize(), GetResolution(), GetLayer() - 1);
+			sUglyHasLoaded = true;
 		}
 		ReturnChunk = mChunks[aX + GetChunksResolution() * aY];
 	}

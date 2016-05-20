@@ -18,6 +18,7 @@ public:
 	size_t GetChunksResolution() const { return mChunksResolution; }
 	void SetChunksResolution(size_t aNewResolution);
 
+	static bool sUglyHasLoaded;
 protected:
 	bool ValidChunk(size_t aX, size_t aY) const;
 

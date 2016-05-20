@@ -26,12 +26,12 @@ protected:
 
 public:
 	Camera() = delete;
-	Camera(const sf::Window* aWindow);
+	Camera(const sf::Window* aWindow, float aWorldSize);
 	~Camera();
 
 	virtual void Update();
 	const sf::View& GetView() const { return mView; }
-
+	
 	void Zoom(int aDelta);
 };
 

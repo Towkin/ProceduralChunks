@@ -3,40 +3,40 @@
 #include "Noise.h"
 #include <iostream>
 #include <time.h>
+#include <thread>
+
+
+const float ChunkFactory::sHeightBaseFrequency = 1.f / 350000;
+const unsigned int ChunkFactory::sHeightOctaves = 8;
+const unsigned int ChunkFactory::sHeightSeed = (unsigned int)time(NULL);
+//const unsigned int ChunkFactory::sHeightSeed = 789432;
+const float ChunkFactory::sHeightLacunarity = 2.85f;
+const float ChunkFactory::sHeightPersistance = 0.55f;
 
 
 
+const float ChunkFactory::sDryBaseFrequency = 1.f / 100000;
+const unsigned int ChunkFactory::sDryOctaves = 4;
+const unsigned int ChunkFactory::sDrySeed = (unsigned int)time(NULL) + 128;
+//const unsigned int ChunkFactory::sDrySeed = 98743267;
+const float ChunkFactory::sDryLacunarity = 3.1f;
+const float ChunkFactory::sDryPersistance = 0.4f;
 
-float ChunkFactory::sHeightBaseFrequency = 1.f / 50000;
-unsigned int ChunkFactory::sHeightOctaves = 8;
-unsigned int ChunkFactory::sHeightSeed = (unsigned int)time(NULL);
-//unsigned int ChunkFactory::sHeightSeed = 789432;
-float ChunkFactory::sHeightLacunarity = 2.45f;
-float ChunkFactory::sHeightPersistance = 0.43f;
-
-
-
-float ChunkFactory::sDryBaseFrequency = 1.f / 100000;
-unsigned int ChunkFactory::sDryOctaves = 6;
-unsigned int ChunkFactory::sDrySeed = (unsigned int)time(NULL) + 128;
-//unsigned int ChunkFactory::sDrySeed = 98743267;
-float ChunkFactory::sDryLacunarity = 3.1f;
-float ChunkFactory::sDryPersistance = 0.4f;
-
-
-
-float ChunkFactory::sHeightMax = 0.f;
-float ChunkFactory::sHeightMin = 1.f;
-
-float ChunkFactory::sDryMax = 0.f;
-float ChunkFactory::sDryMin = 1.f;
+bool ChunkFactory::sMinMaxInit = false;
+float ChunkFactory::sHeightMax = 1.f;
+float ChunkFactory::sHeightMin = 0.f;
+float ChunkFactory::sDryMax = 1.f;
+float ChunkFactory::sDryMin = 0.f;
 
 ChunkFactory::ChunkFactory() {}
 
 
 ChunkFactory::~ChunkFactory() {}
 
+#include <SFML/System/Clock.hpp>
 Chunk* ChunkFactory::GenerateChunk(float aX, float aY, float aSize, int aResolution, unsigned int aLayer) {
+
+	sf::Clock Timer;
 
 	Chunk* ReturnChunk;
 	if (aLayer > 0) {
@@ -55,79 +55,81 @@ Chunk* ChunkFactory::GenerateChunk(float aX, float aY, float aSize, int aResolut
 	
 	float Increment = aSize / aResolution;
 
-	if (sHeightMax == 0.f && sHeightMin == 1.f &&
-		sDryMax == 0.f && sDryMin == 1.f) {
+	if (!sMinMaxInit) {
+		sMinMaxInit = true;
+		float HeightMax = 0.f;
+		float HeightMin = 1.f;
+		float DryMax = 0.f;
+		float DryMin = 1.f;
 		for (int x = 0; x < aResolution; x++) {
+			float cX = aX + (float)x * Increment;
 			for (int y = 0; y < aResolution; y++) {
-
-				float cX = aX + (float)x * Increment;
 				float cY = aY + (float)y * Increment;
 
-				float Coords[2]{ cX, cY };
+				//float Height =	Noise::Perlin(Coords, 2, sHeightBaseFrequency, sHeightOctaves, sHeightSeed, sHeightLacunarity, sHeightPersistance);
+				//float Dryness = Noise::Perlin(Coords, 2, sDryBaseFrequency, sDryOctaves, sDrySeed, sDryLacunarity, sDryPersistance);
+				float Height = GenerateHeightPoint(cX, cY);
+				float Dryness = GenerateDrynessPoint(cX, cY);
 
-				//float Height = (float)x / aResolution;
-				//float Dryness = (float)y / aResolution;
+				HeightMax = std::fmaxf(Height, HeightMax);
+				HeightMin = std::fminf(Height, HeightMin);
 
-				float Height =	Noise::Perlin(Coords, 2, sHeightBaseFrequency, sHeightOctaves, sHeightSeed, sHeightLacunarity, sHeightPersistance);
-				float Dryness = Noise::Perlin(Coords, 2, sDryBaseFrequency, sDryOctaves, sDrySeed, sDryLacunarity, sDryPersistance);
-
-				sHeightMax = std::fmaxf(Height, sHeightMax);
-				sHeightMin = std::fminf(Height, sHeightMin);
-
-				sDryMax = std::fmaxf(Dryness, sDryMax);
-				sDryMin = std::fminf(Dryness, sDryMin);
-				
-				
+				DryMax = std::fmaxf(Dryness, DryMax);
+				DryMin = std::fminf(Dryness, DryMin);
 			}
 		}
-		sHeightMax += 0.025f;
-		sHeightMin -= 0.025f;
 
-		sDryMax += 0.025f;
-		sDryMin -= 0.025f;
-
-		std::cout << "Static\n Height - Max: " << sHeightMax << ", Min: " << sHeightMin << "\n Dryness - Max: " << sDryMax << ", Min: " << sDryMin << "\n";
+		sHeightMax = HeightMax; 
+		sHeightMin = HeightMin;
+		sDryMax = DryMax; 
+		sDryMin = DryMin;
 	}
 
-	float HeightMax = 0.f;
-	float HeightMin = 1.f;
+	const size_t ThreadCountBase = 4;
+	const size_t ThreadCount = ThreadCountBase * ThreadCountBase;
 
-	float DryMax = 0.f;
-	float DryMin = 1.f;
+	std::thread Threads[ThreadCount];
 
+	for (int i = 0; i < ThreadCount; i++) {
+		Threads[i] = std::thread(
+			GenerateArea, 
+			ReturnChunk, 
+			(i % ThreadCountBase) * (aResolution / ThreadCountBase),
+			(i / ThreadCountBase) * (aResolution / ThreadCountBase),
+			aX, aY, Increment, aResolution / ThreadCountBase
+		);
+	}
 
-	for (int x = 0; x < aResolution; x++) {
-		for (int y = 0; y < aResolution; y++) {
-			
-			float cX = aX + (float)x * Increment;
-			float cY = aY + (float)y * Increment;
-
-			float Coords[2] { cX, cY };
-
-			//float Height = (float)x / aResolution;
-			//float Dryness = (float)y / aResolution;
-
-			float Height =	(Noise::Perlin(Coords, 2, sHeightBaseFrequency, sHeightOctaves, sHeightSeed, sHeightLacunarity, sHeightPersistance) - sHeightMin) / (sHeightMax - sHeightMin);
-			float Dryness = (Noise::Perlin(Coords, 2, sDryBaseFrequency, sDryOctaves, sDrySeed, sDryLacunarity, sDryPersistance) - sDryMin) / (sDryMax - sDryMin);
-			
-			HeightMax = std::fmaxf(HeightMax, Height);
-			HeightMin = std::fminf(HeightMin, Height);
-
-			DryMax = std::fmaxf(DryMax, Dryness);
-			DryMin = std::fminf(DryMin, Dryness);
-
-			ReturnChunk->SetData(x, y, Chunk::Height, Height);
-			ReturnChunk->SetData(x, y, Chunk::Dryness, Dryness);
-
-			//std::cout << "Value " << Value << "\n";
-		}
+	for (int i = 0; i < ThreadCount; i++) {
+		Threads[i].join();
 	}
 	
-	std::cout << "Generated chunk. Layer: " << aLayer << ", X: " << aX << ", Y: " << aY << ".\n";
-
 
 	ReturnChunk->ApplyData();
 
-	
+	std::cout << "Generated chunk. Layer: " << aLayer << ", X: " << aX << ", Y: " << aY << ". Time: " << Timer.getElapsedTime().asSeconds() << "\n";
+
 	return ReturnChunk;
+}
+
+void ChunkFactory::GenerateArea(Chunk* aChunk, int aStartX, int aStartY, float aX, float aY, float aIncrement, int aResolution) {
+	for (int x = aStartX; x < aStartX + aResolution; x++) {
+		float cX = aX + (float)x * aIncrement;
+
+		for (int y = aStartY; y < aStartY + aResolution; y++) {
+			float cY = aY + (float)y * aIncrement;
+			
+			aChunk->SetData(x, y, Chunk::Height, GenerateHeightPoint(cX, cY));
+			aChunk->SetData(x, y, Chunk::Dryness, GenerateDrynessPoint(cX, cY));
+		}
+	}
+}
+
+float ChunkFactory::GenerateHeightPoint(float aX, float aY) {
+	float Coords[2]{ aX, aY };
+	return std::fminf(std::fmaxf((Noise::Perlin(Coords, 2, sHeightBaseFrequency, sHeightOctaves, sHeightSeed, sHeightLacunarity, sHeightPersistance) - sHeightMin) / (sHeightMax - sHeightMin), 0.f), 0.9999f);
+}
+float ChunkFactory::GenerateDrynessPoint(float aX, float aY) {
+	float Coords[2]{ aX, aY };
+	return std::fminf(std::fmaxf((Noise::Perlin(Coords, 2, sDryBaseFrequency, sDryOctaves, sDrySeed, sDryLacunarity, sDryPersistance) - sDryMin) / (sDryMax - sDryMin), 0.f), 0.9999f);
 }
