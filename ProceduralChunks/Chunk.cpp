@@ -69,12 +69,12 @@ void Chunk::ApplyData() {
 			float DryValue = GetData(x, y, DataType::Dryness);
 
 			if (sShouldLerpColors) {
-				float HeightValueLerp = HeightValue * sMapColors.getSize().x;
+				float HeightValueLerp = HeightValue * (sMapColors.getSize().x - 1);
 				int HeightValueMin = std::floorf(HeightValueLerp);
 				HeightValueLerp -= HeightValueMin;
 				int HeightValueMax = HeightValueMin + 1;
 
-				float DryValueLerp = DryValue * sMapColors.getSize().y;
+				float DryValueLerp = DryValue * (sMapColors.getSize().y - 1);
 				int DryValueMin = std::floorf(DryValueLerp);
 				DryValueLerp -= DryValueMin;
 				int DryValueMax = DryValueMin + 1;
@@ -96,7 +96,32 @@ void Chunk::ApplyData() {
 					)
 				);
 			} else {
-				mImage.setPixel(x, y, sMapColors.getPixel(HeightValue * sMapColors.getSize().x, DryValue * sMapColors.getSize().y));
+				sf::Color PixelColor = sMapColors.getPixel(HeightValue * sMapColors.getSize().x, DryValue * sMapColors.getSize().y);
+				//sf::Color PixelColor = sf::Color::White;
+				
+				// Shadow test
+
+				//if (HeightValue > 0.5f) {
+
+				//	//const float ShadowLength = 125.f;
+				//	const size_t PixelDistance = 1;//std::ceilf(((ShadowLength / GetSize()) * GetResolution()));
+
+				//	float HeightX0 = GetData(std::fmaxf(x - PixelDistance, 0), y, DataType::Height);
+				//	float HeightX1 = GetData(std::fminf(x + PixelDistance, GetResolution() - 1), y, DataType::Height);
+
+				//	float HeightY0 = GetData(x, std::fmaxf(y - PixelDistance, 0), DataType::Height);
+				//	float HeightY1 = GetData(x, std::fminf(y + PixelDistance, GetResolution() - 1), DataType::Height);
+
+				//	const float WeightX = 1.f;
+				//	const float WeightY = 0.75f;
+
+				//	float DarkenValue = 1.f - std::fminf(std::fmaxf(0.f, (2000.f * (WeightX * (HeightX0 - HeightX1) + WeightY * (HeightY0 - HeightY1)) / (GetSize() / GetResolution())) * (HeightValue - 0.5f) * 2.f - 0.05f), 1.f);
+				//	
+				//	PixelColor.r *= DarkenValue;
+				//	PixelColor.b *= DarkenValue;
+				//	PixelColor.g *= DarkenValue;
+				//}
+				mImage.setPixel(x, y, PixelColor);
 			}
 		}
 	}

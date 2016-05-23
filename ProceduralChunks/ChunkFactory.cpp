@@ -2,12 +2,15 @@
 #include "LayerChunk.h"
 #include "Noise.h"
 #include <iostream>
-#include <time.h>
+//#include <time.h>
+#include <SFML/System/Clock.hpp>
 #include <thread>
 
 
 const float ChunkFactory::sHeightBaseFrequency = 1.f / 350000;
-const unsigned int ChunkFactory::sHeightOctaves = 8;
+const unsigned int ChunkFactory::sHeightOctaves = 10;
+//const float ChunkFactory::sHeightBaseFrequency = 1.f / 15000000;
+//const unsigned int ChunkFactory::sHeightOctaves = 16;
 const unsigned int ChunkFactory::sHeightSeed = (unsigned int)time(NULL);
 //const unsigned int ChunkFactory::sHeightSeed = 789432;
 const float ChunkFactory::sHeightLacunarity = 2.85f;
@@ -16,7 +19,8 @@ const float ChunkFactory::sHeightPersistance = 0.55f;
 
 
 const float ChunkFactory::sDryBaseFrequency = 1.f / 100000;
-const unsigned int ChunkFactory::sDryOctaves = 4;
+//const float ChunkFactory::sDryBaseFrequency = 1.f / 10000000;
+const unsigned int ChunkFactory::sDryOctaves = 7;
 const unsigned int ChunkFactory::sDrySeed = (unsigned int)time(NULL) + 128;
 //const unsigned int ChunkFactory::sDrySeed = 98743267;
 const float ChunkFactory::sDryLacunarity = 3.1f;
@@ -33,7 +37,7 @@ ChunkFactory::ChunkFactory() {}
 
 ChunkFactory::~ChunkFactory() {}
 
-#include <SFML/System/Clock.hpp>
+
 Chunk* ChunkFactory::GenerateChunk(float aX, float aY, float aSize, int aResolution, unsigned int aLayer) {
 
 	sf::Clock Timer;
@@ -61,13 +65,12 @@ Chunk* ChunkFactory::GenerateChunk(float aX, float aY, float aSize, int aResolut
 		float HeightMin = 1.f;
 		float DryMax = 0.f;
 		float DryMin = 1.f;
+
 		for (int x = 0; x < aResolution; x++) {
 			float cX = aX + (float)x * Increment;
 			for (int y = 0; y < aResolution; y++) {
 				float cY = aY + (float)y * Increment;
 
-				//float Height =	Noise::Perlin(Coords, 2, sHeightBaseFrequency, sHeightOctaves, sHeightSeed, sHeightLacunarity, sHeightPersistance);
-				//float Dryness = Noise::Perlin(Coords, 2, sDryBaseFrequency, sDryOctaves, sDrySeed, sDryLacunarity, sDryPersistance);
 				float Height = GenerateHeightPoint(cX, cY);
 				float Dryness = GenerateDrynessPoint(cX, cY);
 
