@@ -122,10 +122,13 @@ float Noise::Smooth(float x) {
 float Noise::Lerp(float a, float b, float t) {
 	return a + (b - a) * t;
 }
+int Noise::IntFloorFast(float x) {
+	return (int)x - ((int)x > x);
+}
 
 
 float Noise::RawValueNoise(float x, const int aHash[]) {
-	int HashPoint = (int)floorf(x);
+	int HashPoint = IntFloorFast(x);
 	float LerpValue = Smooth(x - HashPoint);
 	HashPoint &= sHashMask;
 
@@ -136,7 +139,7 @@ float Noise::RawValueNoise(float x, const int aHash[]) {
 	) * sHashFactor;
 }
 float Noise::RawValueNoise(float x, float y, const int aHash[]) {
-	int HashPoint0 = (int)floorf(x);
+	int HashPoint0 = IntFloorFast(x);
 	float LerpX = Smooth(x - HashPoint0);
 	HashPoint0 &= sHashMask;
 	int HashPoint1 = HashPoint0 + 1;
@@ -144,7 +147,7 @@ float Noise::RawValueNoise(float x, float y, const int aHash[]) {
 	int Hash0 = aHash[HashPoint0];
 	int Hash1 = aHash[HashPoint1];
 
-	HashPoint0 = (int)floorf(y);
+	HashPoint0 = IntFloorFast(y);
 	float LerpY = Smooth(y - HashPoint0);
 	HashPoint0 &= sHashMask;
 	HashPoint1 = HashPoint0 + 1;
@@ -170,7 +173,7 @@ float Noise::RawValueNoise(float x, float y, const int aHash[]) {
 }
 float Noise::RawValueNoise(float x, float y, float z, const int aHash[]) {
 	
-	int HashPoint0 = (int)floorf(x);
+	int HashPoint0 = IntFloorFast(x);
 	float LerpX = Smooth(x - HashPoint0);
 	HashPoint0 &= sHashMask;
 	int HashPoint1 = HashPoint0 + 1;
@@ -178,7 +181,7 @@ float Noise::RawValueNoise(float x, float y, float z, const int aHash[]) {
 	int Hash0 = aHash[HashPoint0];
 	int Hash1 = aHash[HashPoint1];
 
-	HashPoint0 = (int)floorf(y);
+	HashPoint0 = IntFloorFast(y);
 	float LerpY = Smooth(y - HashPoint0);
 	HashPoint0 &= sHashMask;
 	HashPoint1 = HashPoint0 + 1;
@@ -188,7 +191,7 @@ float Noise::RawValueNoise(float x, float y, float z, const int aHash[]) {
 	int Hash10 = aHash[Hash1 + HashPoint0];
 	int Hash11 = aHash[Hash1 + HashPoint1];
 
-	HashPoint0 = (int)floorf(z);
+	HashPoint0 = IntFloorFast(z);
 	float LerpZ = Smooth(z - HashPoint0);
 	HashPoint0 &= sHashMask;
 	HashPoint1 = HashPoint0 + 1;
@@ -250,7 +253,7 @@ float Noise::RawValueNoise(float aPoint[], size_t aDimensions, const int aHash[]
 	int HashPointMask = 1;
 	for (int i = 0; i < aDimensions; i++) {
 		HashPoint[i].resize(2);
-		HashPoint[i][0] = (int)floorf(aPoint[i]);
+		HashPoint[i][0] = IntFloorFast(aPoint[i]);
 		LerpAmount[i] = aPoint[i] - HashPoint[i][0];
 		HashPoint[i][0] &= sHashMask;
 		HashPoint[i][1] = HashPoint[i][0] + 1;
@@ -300,7 +303,7 @@ float Noise::RawValueNoise(float aPoint[], size_t aDimensions, const int aHash[]
 
 
 float Noise::RawPerlinNoise(float x, const int aHash[]) {
-	int HashPoint0 = (int)floorf(x);
+	int HashPoint0 = IntFloorFast(x);
 	float Decimal0 = x - HashPoint0;
 	float Decimal1 = Decimal0 - 1.f;
 	float LerpValue = Smooth(Decimal0);
@@ -322,7 +325,7 @@ float Noise::RawPerlinNoise(float x, const int aHash[]) {
 }
 float Noise::RawPerlinNoise(float x, float y, const int aHash[]) {
 	
-	int HashPoint0 = (int)floorf(x);
+	int HashPoint0 = IntFloorFast(x);
 	float DecimalX0 = x - HashPoint0;
 	float DecimalX1 = DecimalX0 - 1.f;
 	float LerpX = Smooth(DecimalX0);
@@ -332,7 +335,7 @@ float Noise::RawPerlinNoise(float x, float y, const int aHash[]) {
 	int Hash0 = aHash[HashPoint0];
 	int Hash1 = aHash[HashPoint1];
 
-	HashPoint0 = (int)floorf(y);
+	HashPoint0 = IntFloorFast(y);
 	float DecimalY0 = y - HashPoint0;
 	float DecimalY1 = DecimalY0 - 1.f;
 	float LerpY = Smooth(DecimalY0);
@@ -360,7 +363,7 @@ float Noise::RawPerlinNoise(float x, float y, const int aHash[]) {
 	) * sSqrt2 / 2.f + 0.5f;
 }
 float Noise::RawPerlinNoise(float x, float y, float z, const int aHash[]) {
-	int HashPoint0 = (int)floorf(x);
+	int HashPoint0 = IntFloorFast(x);
 	float DecimalX0 = x - HashPoint0;
 	float DecimalX1 = DecimalX0 - 1.f;
 	float LerpX = Smooth(DecimalX0);
@@ -370,7 +373,7 @@ float Noise::RawPerlinNoise(float x, float y, float z, const int aHash[]) {
 	int Hash0 = aHash[HashPoint0];
 	int Hash1 = aHash[HashPoint1];
 
-	HashPoint0 = (int)floorf(y);
+	HashPoint0 = IntFloorFast(y);
 	float DecimalY0 = y - HashPoint0;
 	float DecimalY1 = DecimalY0 - 1.f;
 	float LerpY = Smooth(DecimalY0);
@@ -383,7 +386,7 @@ float Noise::RawPerlinNoise(float x, float y, float z, const int aHash[]) {
 	int Hash10 = aHash[Hash1 + HashPoint0];
 	int Hash11 = aHash[Hash1 + HashPoint1];
 
-	HashPoint0 = (int)floorf(z);
+	HashPoint0 = IntFloorFast(z);
 	float DecimalZ0 = z - HashPoint0;
 	float DecimalZ1 = DecimalZ0 - 1.f;
 	float LerpZ = Smooth(DecimalZ0);

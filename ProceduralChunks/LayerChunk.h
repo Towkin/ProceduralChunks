@@ -1,8 +1,8 @@
 #pragma once
-#include "Chunk.h"
+#include "ImageChunk.h"
 
 class LayerChunk :
-	public Chunk {
+	public ImageChunk {
 public:
 	LayerChunk();
 	~LayerChunk();

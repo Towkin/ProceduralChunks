@@ -1,8 +1,8 @@
 #include "ChunkFactory.h"
+#include "TerrainChunk.h"
 #include "LayerChunk.h"
 #include "Noise.h"
 #include <iostream>
-//#include <time.h>
 #include <SFML/System/Clock.hpp>
 #include <thread>
 
@@ -38,25 +38,29 @@ ChunkFactory::ChunkFactory() {}
 ChunkFactory::~ChunkFactory() {}
 
 
-Chunk* ChunkFactory::GenerateChunk(float aX, float aY, float aSize, int aResolution, unsigned int aLayer) {
+Chunk* ChunkFactory::GenerateChunk(float aX, float aY, float aSize, int aResolution, unsigned int aLayer, bool aImage) {
 
 	sf::Clock Timer;
 
 	Chunk* ReturnChunk;
-	if (aLayer > 0) {
-		LayerChunk* NewLayerChunk = new LayerChunk();
-		NewLayerChunk->SetLayer(aLayer);
-		NewLayerChunk->SetChunksResolution(4);
+	if (aImage) {
+		if (aLayer > 0) {
+			LayerChunk* NewLayerChunk = new LayerChunk();
+			NewLayerChunk->SetLayer(aLayer);
+			NewLayerChunk->SetChunksResolution(4);
 
-		ReturnChunk = NewLayerChunk;
+			ReturnChunk = NewLayerChunk;
+		} else {
+			ReturnChunk = new ImageChunk();
+		}
 	} else {
-		ReturnChunk = new Chunk();
+		ReturnChunk = new TerrainChunk();
 	}
 
+	ReturnChunk->SetResolution(aResolution);
 	ReturnChunk->SetPosition(aX, aY);
 	ReturnChunk->SetSize(aSize);
-	ReturnChunk->SetResolution(aResolution);
-	
+
 	float Increment = aSize / aResolution;
 
 	if (!sMinMaxInit) {
@@ -107,9 +111,8 @@ Chunk* ChunkFactory::GenerateChunk(float aX, float aY, float aSize, int aResolut
 		Threads[i].join();
 	}
 	
-
 	ReturnChunk->ApplyData();
-
+	
 	std::cout << "Generated chunk. Layer: " << aLayer << ", X: " << aX << ", Y: " << aY << ". Time: " << Timer.getElapsedTime().asSeconds() << "\n";
 
 	return ReturnChunk;

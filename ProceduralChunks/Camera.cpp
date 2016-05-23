@@ -45,13 +45,33 @@ void Camera::Update() {
 		mVelocity.y *= GetAspectRatio().y * (GetViewSize() / mWindow->getSize().y);
 		mMouseHeldLocation = sf::Mouse::getPosition();
 	}
-	
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-		SetViewSize(GetViewSize() * 0.95f);
+	const float ZoomSpeed = 1.f - 0.05f;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::PageUp)
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
+		SetViewSize(GetViewSize() * ZoomSpeed);
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-		SetViewSize(GetViewSize() * 1.033f);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::PageDown)
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
+		SetViewSize(GetViewSize() / ZoomSpeed);
 	}
+	const float Speed = GetViewSize() * 0.015f;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+		mVelocity.x -= Speed;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+		mVelocity.x += Speed;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+		mVelocity.y -= Speed;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+		mVelocity.y += Speed;
+	}
+
 
 	mView.setCenter(mView.getCenter() + mVelocity);
 	

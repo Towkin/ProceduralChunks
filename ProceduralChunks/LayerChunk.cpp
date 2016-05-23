@@ -26,8 +26,7 @@ float Clamp(float value, float min, float max) {
 }
 void LayerChunk::Draw(sf::RenderTarget* aRenderer, sf::FloatRect aRenderRect) {
 	
-	Chunk::Draw(aRenderer, aRenderRect);
-	
+	ImageChunk::Draw(aRenderer, aRenderRect);
 	
 	if ((aRenderer->getSize().x / GetResolution()) * (GetSize() / aRenderRect.width) > 1.5f ||
 		(aRenderer->getSize().y / GetResolution()) * (GetSize() / aRenderRect.height) > 1.5f) {

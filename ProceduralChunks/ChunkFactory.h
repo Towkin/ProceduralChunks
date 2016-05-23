@@ -31,6 +31,6 @@ private:
 	static float GenerateHeightPoint(float aX, float aY);
 	static float GenerateDrynessPoint(float aX, float aY);
 public:
-	static Chunk* GenerateChunk(float aX, float aY, float aSize, int aResolution, unsigned int aLayer);
+	static Chunk* GenerateChunk(float aX, float aY, float aSize, int aResolution, unsigned int aLayer, bool aImage = true);
 };
 

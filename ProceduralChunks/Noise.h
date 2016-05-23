@@ -19,6 +19,7 @@ protected:
 	// Help values and functions
 	static float Smooth(float x);
 	static float Lerp(float a, float b, float t);
+	static int IntFloorFast(float x);
 	static const float sSqrt2;
 
 	// Value noise 1D, 2D and 3D
