@@ -5,7 +5,7 @@
 #include <iostream>
 #include <SFML/System/Clock.hpp>
 #include <thread>
-
+#include <algorithm>
 
 const float ChunkFactory::sHeightBaseFrequency = 1.f / 350000;
 const unsigned int ChunkFactory::sHeightOctaves = 10;
@@ -32,15 +32,40 @@ float ChunkFactory::sHeightMin = 0.f;
 float ChunkFactory::sDryMax = 1.f;
 float ChunkFactory::sDryMin = 0.f;
 
+const size_t ChunkFactory::sChunkMaxCount = 64;
+std::vector<Chunk*> ChunkFactory::sImageChunks = std::vector<Chunk*>();
+
+void ChunkFactory::RemoveChunk(Chunk* aChunk) {
+	for (size_t i = 0; i < sImageChunks.size(); i++) {
+		if (sImageChunks[i] == aChunk) {
+			std::cout << sImageChunks[i]->GetLayer();
+			sImageChunks[i] = sImageChunks.back();
+			sImageChunks.pop_back();
+			break;
+		}
+	}
+}
+
+
 ChunkFactory::ChunkFactory() {}
 
 
 ChunkFactory::~ChunkFactory() {}
 
+bool LastTickFirst(Chunk* a, Chunk* b) {
+	return a->GetTick() > b->GetTick();
+}
 
 Chunk* ChunkFactory::GenerateChunk(float aX, float aY, float aSize, int aResolution, unsigned int aLayer, bool aImage) {
 
 	sf::Clock Timer;
+
+	if (sImageChunks.size() >= sChunkMaxCount) {
+		std::sort(sImageChunks.begin(), sImageChunks.end(), LastTickFirst);
+		std::cout << "Removing elements... ";
+		delete sImageChunks.back();
+		std::cout << "\n";
+	}
 
 	Chunk* ReturnChunk;
 	if (aImage) {
@@ -53,6 +78,7 @@ Chunk* ChunkFactory::GenerateChunk(float aX, float aY, float aSize, int aResolut
 		} else {
 			ReturnChunk = new ImageChunk();
 		}
+		sImageChunks.push_back(ReturnChunk);
 	} else {
 		ReturnChunk = new TerrainChunk();
 	}
@@ -63,6 +89,7 @@ Chunk* ChunkFactory::GenerateChunk(float aX, float aY, float aSize, int aResolut
 
 	float Increment = aSize / aResolution;
 
+	
 	if (!sMinMaxInit) {
 		sMinMaxInit = true;
 		float HeightMax = 0.f;

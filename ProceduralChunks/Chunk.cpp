@@ -1,7 +1,8 @@
 #include "Chunk.h"
+#include "ChunkFactory.h"
 #include <iostream>
 
-
+unsigned int Chunk::sMasterTick = 0;
 
 bool Chunk::ValidCoordinates(size_t aX, size_t aY) const
 {
@@ -44,10 +45,20 @@ size_t Chunk::GetIndex(size_t aX, size_t aY) const {
 
 
 
+void Chunk::Tick() {
+	mLastTick = sMasterTick;
+}
+
 Chunk::Chunk() :
 	mData(std::map<DataType, std::vector<float>>()),
 	mResolution(0)
 {}
 
 
-Chunk::~Chunk() {}
+Chunk::~Chunk() {
+	if (GetParent()) {
+		GetParent()->RemoveChild(this);
+	}
+	
+	ChunkFactory::RemoveChunk(this);
+}

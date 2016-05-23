@@ -33,10 +33,10 @@ void ImageChunk::ApplyData() {
 
 	for (int x = 0; x < GetResolution(); x++) {
 		for (int y = 0; y < GetResolution(); y++) {
-			/*if(x < 2 || y < 2) {
-			mImage.setPixel(x, y, sf::Color());
-			continue;
-			}*/
+			//if(x < 2 || y < 2) {
+			//mImage.setPixel(x, y, sf::Color());
+			//continue;
+			//}
 
 
 			float HeightValue = GetData(x, y, DataType::Height);
@@ -111,4 +111,5 @@ void ImageChunk::ApplyData() {
 
 void ImageChunk::Draw(sf::RenderTarget* aRenderer, sf::FloatRect aRenderRect) {
 	aRenderer->draw(mDrawRectangle);
+	Tick();
 }

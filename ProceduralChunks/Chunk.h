@@ -18,6 +18,10 @@ private:
 	std::map<DataType, std::vector<float>> mData;
 	size_t mResolution;
 	
+	Chunk* mParent;
+
+	static unsigned int sMasterTick;
+	unsigned int mLastTick;
 protected:
 	bool ValidCoordinates(size_t aX, size_t aY) const;
 	size_t GetIndex(size_t aX, size_t aY) const;
@@ -35,10 +39,21 @@ public:
 
 	float GetSize() const { return mChunkSize; }
 	void SetSize(float aNewSize) { mChunkSize = aNewSize; }
+	
+	Chunk* GetParent() const { return mParent; }
+	void SetParent(Chunk* aParent) { mParent = aParent; }
+
+	virtual void RemoveChild(Chunk* aChild) {}
+
 
 	virtual void ApplyData() {}
 	virtual unsigned int GetLayer() const { return 0; }
 	virtual void Draw(sf::RenderTarget* aRenderer, sf::FloatRect aRenderRect) {}
+	virtual void Tick();
+
+	unsigned int GetTick() const { return mLastTick; }
+
+	static void MasterTick() { ++sMasterTick; }
 
 	Chunk();
 	~Chunk();

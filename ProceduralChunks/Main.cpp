@@ -9,9 +9,11 @@
 int main() {
 	size_t ChunkRes = 512;
 	float WorldSize = 250000.f;
+	float Offset = WorldSize / (ChunkRes * 8 * 2);
+	TerrainChunk::SetupTerrainColors();
 
-	TerrainChunk* DataChunk = (TerrainChunk*)ChunkFactory::GenerateChunk(0, 0, WorldSize, ChunkRes * 4, 0, false);
-	Chunk* BaseChunk = ChunkFactory::GenerateChunk(0, 0, WorldSize, ChunkRes, 2);
+	Chunk* BaseChunk = ChunkFactory::GenerateChunk(0, 0, WorldSize, ChunkRes, 3);
+	TerrainChunk* DataChunk = (TerrainChunk*)ChunkFactory::GenerateChunk(Offset, Offset, WorldSize, ChunkRes * 8, 0, false);
 
 	sf::RenderWindow MainWindow(sf::VideoMode(1024, 800), "Chunks!!!");
 	MainWindow.setFramerateLimit(60);
@@ -28,28 +30,26 @@ int main() {
 	sf::Color TerrainColors[TerrainChunk::Terrain::Count];
 	sf::Uint8 Opacity = 128;
 	TerrainColors[TerrainChunk::Terrain::Error] =			sf::Color(255, 0, 0, Opacity);
-	TerrainColors[TerrainChunk::Terrain::DeepWater] =		sf::Color(0, 0, 128, Opacity);
-	TerrainColors[TerrainChunk::Terrain::Water] =			sf::Color(0, 0, 255, Opacity);
-	TerrainColors[TerrainChunk::Terrain::Forest] =			sf::Color(0, 128, 0, Opacity);
-	TerrainColors[TerrainChunk::Terrain::ForestMountain] =	sf::Color(96, 128, 64, Opacity);
-	TerrainColors[TerrainChunk::Terrain::Grass] =			sf::Color(0, 192, 64, Opacity);
-	TerrainColors[TerrainChunk::Terrain::Mountain] =		sf::Color(64, 64, 64, Opacity);
-	TerrainColors[TerrainChunk::Terrain::Desert] =			sf::Color(255, 255, 0, Opacity);
-	TerrainColors[TerrainChunk::Terrain::DesertMountain] =	sf::Color(128, 96, 64, Opacity);
-	TerrainColors[TerrainChunk::Terrain::MountainTop] =		sf::Color(192, 192, 192, Opacity);
-
-	//size_t WaterCount = 0;
-	//size_t LandCount = 0;
-
+	
 	for (size_t x = 0; x < DataChunk->GetResolution(); x++) {
 		for (size_t y = 0; y < DataChunk->GetResolution(); y++) {
 			TerrainChunk::Terrain TerrainType = DataChunk->GetTerrainData(x, y);
-			OverlayImage.setPixel(x, y, TerrainColors[TerrainType]);
+			if (TerrainType == TerrainChunk::Terrain::Error) {
+				OverlayImage.setPixel(x, y, sf::Color(255, 0, 0, 255));
+			} else {
+				for (auto it = TerrainChunk::sTerrainColors.begin(); it != TerrainChunk::sTerrainColors.end(); it++) {
+					if (it->second == TerrainType) {
+						sf::Color PixelColor(it->first);
+						PixelColor.a = Opacity;
+						OverlayImage.setPixel(x, y, PixelColor);
+						break;
+					}
+				}
+				
+			}
+			//OverlayImage.setPixel(x, y, TerrainColors[TerrainType]);
 		}
 	}
-
-	//size_t WaterLandSum = WaterCount + LandCount;
-	//std::cout << ((float)WaterCount * 100) / WaterLandSum << "% water.\n";
 
 	sf::Texture OverlayTexture;
 	OverlayTexture.loadFromImage(OverlayImage);
@@ -75,6 +75,7 @@ int main() {
 		MainWindow.setView(MainCamera.GetView());
 
 		LayerChunk::sUglyHasLoaded = false;
+		Chunk::MasterTick();
 		BaseChunk->Draw(&MainWindow, sf::FloatRect(MainCamera.GetView().getCenter() - (MainCamera.GetView().getSize() / 2.f), MainCamera.GetView().getSize()));
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {

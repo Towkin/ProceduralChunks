@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 
 class Chunk;
 class ChunkFactory
@@ -23,6 +24,8 @@ private:
 	static float sDryMin;
 	static float sDryMax;
 	
+	static const size_t sChunkMaxCount;
+	static std::vector<Chunk*> sImageChunks;
 
 	ChunkFactory();
 	~ChunkFactory();
@@ -32,5 +35,7 @@ private:
 	static float GenerateDrynessPoint(float aX, float aY);
 public:
 	static Chunk* GenerateChunk(float aX, float aY, float aSize, int aResolution, unsigned int aLayer, bool aImage = true);
+
+	static void RemoveChunk(Chunk* aChunk);
 };
 

@@ -17,6 +17,15 @@ void LayerChunk::SetChunksResolution(size_t aNewResolution) {
 	mChunks.resize(aNewResolution * aNewResolution);
 }
 
+void LayerChunk::RemoveChild(Chunk* aChild) {
+	for (size_t i = 0; i < GetChunksResolution() * GetChunksResolution(); i++) {
+		if (mChunks[i] == aChild) {
+			mChunks[i] = nullptr;
+			break;
+		}
+	}
+}
+
 bool LayerChunk::ValidChunk(size_t aX, size_t aY) const {
 	return (aX < GetChunksResolution() && aY < GetChunksResolution());
 }
@@ -61,10 +70,11 @@ void LayerChunk::Draw(sf::RenderTarget* aRenderer, sf::FloatRect aRenderRect) {
 }
 
 Chunk* LayerChunk::GetChunk(size_t aX, size_t aY) {
-	Chunk* ReturnChunk;
+	Chunk* ReturnChunk = nullptr;
 	if (ValidChunk(aX, aY)) {
 		if (mChunks[aX + GetChunksResolution() * aY] == nullptr && !sUglyHasLoaded) {
 			mChunks[aX + GetChunksResolution() * aY] = ChunkFactory::GenerateChunk(GetX() + aX * GetChildSize(), GetY() + aY * GetChildSize(), GetChildSize(), GetResolution(), GetLayer() - 1);
+			mChunks[aX + GetChunksResolution() * aY]->SetParent(this);
 			sUglyHasLoaded = true;
 		}
 		ReturnChunk = mChunks[aX + GetChunksResolution() * aY];

@@ -4,12 +4,37 @@
 class TerrainChunk :
 	public Chunk {
 public:
-	enum Terrain { Error, DeepWater, Water, Forest, Grass, Desert, ForestMountain, Mountain, DesertMountain, MountainTop, Count };
+	enum Terrain { 
+		Error, 
+		SeaAbyss, 
+		SeaDeep, 
+		SeaNormal,
+		SeaShallow,
+		SeaTropical,
+		Beach,
+		Oasis,
+		Swamp,
+		Forest,
+		Grass,
+		Savannah,
+		Desert,
+		BrownMountain,
+		GreyMountain,
+		DesertMountain,
+		Snow, 
+		// End with Count
+		Count 
+	};
 private:
 	std::vector<TerrainChunk::Terrain> mTerrainData;
+	static sf::Image sTerrainMap;
+public:
+	static std::map<sf::Uint32, TerrainChunk::Terrain> sTerrainColors;
 public:
 	TerrainChunk();
 	~TerrainChunk();
+
+	static void SetupTerrainColors();
 
 	virtual void SetResolution(size_t aNewResolution) override;
 
