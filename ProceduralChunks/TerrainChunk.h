@@ -32,7 +32,7 @@ public:
 	static std::map<sf::Uint32, TerrainChunk::Terrain> sTerrainColors;
 public:
 	TerrainChunk();
-	~TerrainChunk();
+	virtual ~TerrainChunk();
 
 	static void SetupTerrainColors();
 

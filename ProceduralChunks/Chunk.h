@@ -56,6 +56,6 @@ public:
 	static void MasterTick() { ++sMasterTick; }
 
 	Chunk();
-	~Chunk();
+	virtual ~Chunk();
 };
 

@@ -136,7 +136,7 @@ float Noise::RawValueNoise(float x, const int aHash[]) {
 		aHash[HashPoint],
 		aHash[HashPoint + 1],
 		LerpValue
-	) * sHashFactor;
+	) * sHashFactor * 2.f - 1.f;;
 }
 float Noise::RawValueNoise(float x, float y, const int aHash[]) {
 	int HashPoint0 = IntFloorFast(x);
@@ -169,7 +169,7 @@ float Noise::RawValueNoise(float x, float y, const int aHash[]) {
 			LerpX
 		),
 		LerpY
-	) * sHashFactor;
+	) * sHashFactor * 2.f - 1.f;;
 }
 float Noise::RawValueNoise(float x, float y, float z, const int aHash[]) {
 	
@@ -237,7 +237,7 @@ float Noise::RawValueNoise(float x, float y, float z, const int aHash[]) {
 			LerpY
 		),
 		LerpZ
-	) * sHashFactor;
+	) * sHashFactor * 2.f - 1.f;
 }
 
 // Test for any number of dimensions: Failure for performance reasons.
@@ -321,7 +321,7 @@ float Noise::RawPerlinNoise(float x, const int aHash[]) {
 		Velocity0,
 		Velocity1,
 		LerpValue
-	) + 0.5f;
+	) * 2.f;
 }
 float Noise::RawPerlinNoise(float x, float y, const int aHash[]) {
 	
@@ -360,7 +360,7 @@ float Noise::RawPerlinNoise(float x, float y, const int aHash[]) {
 			LerpX
 		),
 		LerpY
-	) * sSqrt2 / 2.f + 0.5f;
+	) * sSqrt2;
 }
 float Noise::RawPerlinNoise(float x, float y, float z, const int aHash[]) {
 	int HashPoint0 = IntFloorFast(x);
@@ -432,7 +432,7 @@ float Noise::RawPerlinNoise(float x, float y, float z, const int aHash[]) {
 			LerpY
 		),
 		LerpZ
-	) / 2.f + 0.5f;
+	);
 }
 
 float Noise::Value(float x, float aFrequency, unsigned int aSeed) {

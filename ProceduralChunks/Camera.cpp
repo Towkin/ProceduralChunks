@@ -7,7 +7,7 @@ Camera::Camera(const sf::Window* aWindow, float aWorldSize) :
 	mWindow(aWindow),
 	mView(),
 	mMaxViewSize(aWorldSize),
-	mMinViewSize(1000.f),
+	mMinViewSize(50.f),
 	mViewSize(aWorldSize)
 {
 	UpdateAspectRatio();

@@ -19,10 +19,11 @@ public:
 	const sf::Image& GetImage() const { return mImage; }
 
 	virtual void ApplyData();
+	static void ApplyArea(ImageChunk* aChunk, size_t aStartX, size_t aStartY, size_t aEndX, size_t aEndY);
 	virtual void Draw(sf::RenderTarget* aRenderer, sf::FloatRect aRenderRect);
 
 	ImageChunk();
-	~ImageChunk();
+	virtual ~ImageChunk();
 
 };
 

@@ -5,7 +5,7 @@ class LayerChunk :
 	public ImageChunk {
 public:
 	LayerChunk();
-	~LayerChunk();
+	virtual ~LayerChunk();
 
 	virtual unsigned int GetLayer() const override { return mLayer; }
 	void SetLayer(unsigned int aNewLayer) { mLayer = aNewLayer; }

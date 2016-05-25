@@ -12,7 +12,7 @@ int main() {
 	float Offset = WorldSize / (ChunkRes * 8 * 2);
 	TerrainChunk::SetupTerrainColors();
 
-	Chunk* BaseChunk = ChunkFactory::GenerateChunk(0, 0, WorldSize, ChunkRes, 3);
+	Chunk* BaseChunk = ChunkFactory::GenerateChunk(0, 0, WorldSize, ChunkRes, 5);
 	TerrainChunk* DataChunk = (TerrainChunk*)ChunkFactory::GenerateChunk(Offset, Offset, WorldSize, ChunkRes * 8, 0, false);
 
 	sf::RenderWindow MainWindow(sf::VideoMode(1024, 800), "Chunks!!!");
