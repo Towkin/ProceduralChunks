@@ -1,11 +1,7 @@
 #pragma once
 #include "Chunk.h"
 class ImageChunk :
-	public Chunk {
-
-public:
-
-	const static bool sShouldLerpColors;
+	public virtual Chunk {
 
 private:
 	sf::RectangleShape mDrawRectangle;
@@ -15,6 +11,7 @@ private:
 	static sf::Image sMapColors;
 	static sf::Image GetMapColors();
 
+	virtual sf::Color GetColor(float x, float y) const;
 public:
 	const sf::Image& GetImage() const { return mImage; }
 

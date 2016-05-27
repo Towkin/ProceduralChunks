@@ -3,12 +3,14 @@
 #include <math.h>
 #include <map>
 
+/// <summary></summary>
+/// <param name=""></param>
+
 class Noise {
 private:
-	Noise();
-	~Noise();
+	Noise() = delete;
+	~Noise() = delete;
 protected:
-
 	// Hash values and functions
 	static std::map<unsigned int, const int*> sHashes;
 	static const int sHashMask;
@@ -17,9 +19,18 @@ protected:
 	
 
 	// Help values and functions
+	/// <summary>Smoothing method to smooth values in range [0...1], using the polynomial function f(x) = 6x^5 - 15x^4 + 10x^3.</summary>
+	/// <param name="x">Input value to smooth.</param>
 	static float Smooth(float x);
+	/// <summary>Simple unclamped linear interpolation.</summary>
+	/// <param name="a">Value at t = 0.</param>
+	/// <param name="b">Value at t = 1.</param>
+	/// <param name="t">Interpolation alpha.</param>
 	static float Lerp(float a, float b, float t);
+	/// <summary>Fast float to int mathematically correct floor conversion. Works with any float value in integer range.</summary>
+	/// <param name="x">The float value to be floored and converted to int.</param>
 	static int IntFloorFast(float x);
+	/// <summary>Precalculated constant of the square root of 2.</summary>
 	static const float sSqrt2;
 
 	// Value noise 1D, 2D and 3D
@@ -77,21 +88,19 @@ public:
 	static float Value(float x, float y, float z, float aFrequency, unsigned int aSeed = 128);
 
 	static float Value(float aCoords[], size_t aDimensions, float aFrequency, unsigned int aOctaves, unsigned int aSeed = 128, float aLacunarity = 2.f, float aPersistance = 0.5f);
-
-	//static float Value(float x, float aFrequency, int aOctaves, unsigned int aSeed = 128, float aLacunarity = 2.f, float aPersistance = 0.5f);
-	//static float Value(float x, float y, float aFrequency, int aOctaves, unsigned int aSeed = 128, float aLacunarity = 2.f, float aPersistance = 0.5f);
-	//static float Value(float x, float y, float z, float aFrequency, int aOctaves, unsigned int aSeed = 128, float aLacunarity = 2.f, float aPersistance = 0.5f);
-
 	
 	static float Perlin(float x, float aFrequency, unsigned int aSeed = 128);
 	static float Perlin(float x, float y, float aFrequency, unsigned int aSeed = 128);
 	static float Perlin(float x, float y, float z, float aFrequency, unsigned int aSeed = 128);
 	
+	/// <summary>Complex Perlin Noise method, calling multiple noise functions and returning the sum in range [-1...1].</summary>
+	/// <param name="aCoords">A C-style array containing the coordinates to calculate noise for. Must contain at least as many elements as aDimensions.</param>
+	/// <param name="aDimensions">The number of dimensions to do Perlin Noise in, can be [1], [2] or [3].</param>
+	/// <param name="aFrequency">The frequency of the first "wave". Hgih frequency = Noisy. Is used as base for later octaves.</param>
+	/// <param name="aOctaves">The number of noise calculations to run on this spot.</param>
+	/// <param name="aSeed">The seed to use when calculating each octave of noise. Note: each seed generates it's own hash-set, avoid switching too often in runtime.</param>
+	/// <param name="aLacunarity">A multiplier, multiplying the last frequency once per octave.</param>
+	/// <param name="aPersistance">How much each additional octave after the first matters.</param>
 	static float Perlin(float aCoords[], size_t aDimensions, float aFrequency, unsigned int aOctaves, unsigned int aSeed = 128, float aLacunarity = 2.f, float aPersistance = 0.5f);
-	
-	//static float Perlin(float x, float aFrequency, int aOctaves, unsigned int aSeed = 128, float aLacunarity = 2.f, float aPersistance = 0.5f);
-	//static float Perlin(float x, float y, float aFrequency, int aOctaves, unsigned int aSeed = 128, float aLacunarity = 2.f, float aPersistance = 0.5f);
-	//static float Perlin(float x, float y, float z, float aFrequency, int aOctaves, unsigned int aSeed = 128, float aLacunarity = 2.f, float aPersistance = 0.5f);
-
 };
 

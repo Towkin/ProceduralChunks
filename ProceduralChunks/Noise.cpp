@@ -4,9 +4,6 @@
 #include <algorithm>
 #include <array>
 
-Noise::Noise() {}
-Noise::~Noise() {}
-
 //int Noise::sHash[512]{
 //	151,160,137, 91, 90, 15,131, 13,201, 95, 96, 53,194,233,  7,225,
 //	140, 36,103, 30, 69,142,  8, 99, 37,240, 21, 10, 23,190,  6,148,
@@ -73,7 +70,6 @@ const int* Noise::GetHash(unsigned int aSeed) {
 	return sHashes[aSeed];
 }
 
-const float Noise::sSqrt2 = 1.41421356237f;
 
 const float Noise::sGradients1D[2] { 
 	1.f, 
@@ -114,8 +110,6 @@ const Noise::Vector3 Noise::sGradients3D[16] {
 };
 const int Noise::sGradienentMask3D = 15;
 
-
-
 float Noise::Smooth(float x) {
 	return x * x * x * (x * (x * 6.f - 15.f) + 10.f); 
 }
@@ -125,6 +119,7 @@ float Noise::Lerp(float a, float b, float t) {
 int Noise::IntFloorFast(float x) {
 	return (int)x - ((int)x > x);
 }
+const float Noise::sSqrt2 = 1.41421356237f;
 
 
 float Noise::RawValueNoise(float x, const int aHash[]) {
@@ -151,6 +146,7 @@ float Noise::RawValueNoise(float x, float y, const int aHash[]) {
 	float LerpY = Smooth(y - HashPoint0);
 	HashPoint0 &= sHashMask;
 	HashPoint1 = HashPoint0 + 1;
+
 
 	int Hash00 = aHash[Hash0 + HashPoint0];
 	int Hash01 = aHash[Hash0 + HashPoint1];
@@ -542,91 +538,3 @@ float Noise::Perlin(float aCoords[], size_t aDimensions, float aFrequency, unsig
 
 	return Sum / Range;
 }
-
-
-
-//float Noise::Value(float x, float aFrequency, int aOctaves, unsigned int aSeed = 128, float aLacunarity, float aPersistance) {
-//	float Sum = Value(x, aFrequency, aSeed);
-//	float Amplitude = 1.f;
-//	float Range = 1.f;
-//
-//	for (int i = 1; i < aOctaves; i++) {
-//		aFrequency *= aLacunarity;
-//		Amplitude *= aPersistance;
-//		Range += Amplitude;
-//		Sum += Value(x, aFrequency, aSeed) * Amplitude;
-//	}
-//	
-//	return Sum / Range;
-//}
-//float Noise::Value(float x, float y, float aFrequency, int aOctaves, unsigned int aSeed = 128, float aLacunarity, float aPersistance) {
-//	float Sum = Value(x, y, aFrequency, aSeed);
-//	float Amplitude = 1.f;
-//	float Range = 1.f;
-//
-//	for (int i = 1; i < aOctaves; i++) {
-//		aFrequency *= aLacunarity;
-//		Amplitude *= aPersistance;
-//		Range += Amplitude;
-//		Sum += Value(x, y, aFrequency, aSeed) * Amplitude;
-//	}
-//
-//	return Sum / Range;
-//}
-//float Noise::Value(float x, float y, float z, float aFrequency, int aOctaves, unsigned int aSeed = 128, float aLacunarity, float aPersistance) {
-//	float Sum = Value(x, y, z, aFrequency, aSeed);
-//	float Amplitude = 1.f;
-//	float Range = 1.f;
-//
-//	for (int i = 1; i < aOctaves; i++) {
-//		aFrequency *= aLacunarity;
-//		Amplitude *= aPersistance;
-//		Range += Amplitude;
-//		Sum += Value(x, y, z, aFrequency, aSeed) * Amplitude;
-//	}
-//
-//	return Sum / Range;
-//}
-
-//float Noise::Perlin(float x, float aFrequency, int aOctaves, unsigned int aSeed = 128, float aLacunarity, float aPersistance) {
-//	float Sum = Perlin(x, aFrequency, aSeed);
-//	float Amplitude = 1.f;
-//	float Range = 1.f;
-//
-//	for (int i = 1; i < aOctaves; i++) {
-//		aFrequency *= aLacunarity;
-//		Amplitude *= aPersistance;
-//		Range += Amplitude;
-//		Sum += Perlin(x, aFrequency, aSeed) * Amplitude;
-//	}
-//
-//	return Sum / Range;
-//}
-//float Noise::Perlin(float x, float y, float aFrequency, int aOctaves, unsigned int aSeed = 128, float aLacunarity, float aPersistance) {
-//	float Sum = Perlin(x, y, aFrequency, aSeed);
-//	float Amplitude = 1.f;
-//	float Range = 1.f;
-//
-//	for (int i = 1; i < aOctaves; i++) {
-//		aFrequency *= aLacunarity;
-//		Amplitude *= aPersistance;
-//		Range += Amplitude;
-//		Sum += Perlin(x, y, aFrequency, aSeed) * Amplitude;
-//	}
-//
-//	return Sum / Range;
-//}
-//float Noise::Perlin(float x, float y, float z, float aFrequency, int aOctaves, unsigned int aSeed = 128, float aLacunarity, float aPersistance) {
-//	float Sum = Perlin(x, y, z, aFrequency, aSeed);
-//	float Amplitude = 1.f;
-//	float Range = 1.f;
-//
-//	for (int i = 1; i < aOctaves; i++) {
-//		aFrequency *= aLacunarity;
-//		Amplitude *= aPersistance;
-//		Range += Amplitude;
-//		Sum += Perlin(x, y, z, aFrequency, aSeed) * Amplitude;
-//	}
-//
-//	return Sum / Range;
-//}

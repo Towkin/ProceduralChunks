@@ -89,6 +89,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -124,6 +125,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -160,6 +162,7 @@
     <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="ChunkFactory.cpp" />
     <ClCompile Include="ImageChunk.cpp" />
+    <ClCompile Include="ImageLayerChunk.cpp" />
     <ClCompile Include="LayerChunk.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Noise.cpp" />
@@ -170,6 +173,7 @@
     <ClInclude Include="Chunk.h" />
     <ClInclude Include="ChunkFactory.h" />
     <ClInclude Include="ImageChunk.h" />
+    <ClInclude Include="ImageLayerChunk.h" />
     <ClInclude Include="LayerChunk.h" />
     <ClInclude Include="Noise.h" />
     <ClInclude Include="TerrainChunk.h" />

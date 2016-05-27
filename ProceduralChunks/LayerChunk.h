@@ -2,13 +2,15 @@
 #include "ImageChunk.h"
 
 class LayerChunk :
-	public ImageChunk {
+	public virtual Chunk {
 public:
 	LayerChunk();
 	virtual ~LayerChunk();
 
 	virtual unsigned int GetLayer() const override { return mLayer; }
 	void SetLayer(unsigned int aNewLayer) { mLayer = aNewLayer; }
+
+	virtual bool IsImage() const { return false; }
 
 	virtual void Draw(sf::RenderTarget* aRenderer, sf::FloatRect aRenderRect) override;
 

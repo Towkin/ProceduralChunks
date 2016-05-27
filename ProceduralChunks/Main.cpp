@@ -20,21 +20,19 @@ int main() {
 	
 	Camera MainCamera(&MainWindow, BaseChunk->GetSize());
 	
+
 	sf::Image OverlayImage;
 	OverlayImage.create(DataChunk->GetResolution(), DataChunk->GetResolution());
 
 	sf::Font TextFont;
 	TextFont.loadFromFile("falconpunch.ttf");
 	
-	
-	sf::Color TerrainColors[TerrainChunk::Terrain::Count];
+
 	sf::Uint8 Opacity = 128;
-	TerrainColors[TerrainChunk::Terrain::Error] =			sf::Color(255, 0, 0, Opacity);
-	
 	for (size_t x = 0; x < DataChunk->GetResolution(); x++) {
 		for (size_t y = 0; y < DataChunk->GetResolution(); y++) {
-			TerrainChunk::Terrain TerrainType = DataChunk->GetTerrainData(x, y);
-			if (TerrainType == TerrainChunk::Terrain::Error) {
+			std::string TerrainType = DataChunk->GetTerrainData(x, y);
+			if (TerrainType == TerrainChunk::sErrorTerrain) {
 				OverlayImage.setPixel(x, y, sf::Color(255, 0, 0, 255));
 			} else {
 				for (auto it = TerrainChunk::sTerrainColors.begin(); it != TerrainChunk::sTerrainColors.end(); it++) {

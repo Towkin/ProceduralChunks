@@ -11,19 +11,23 @@ sf::Color LerpColors(sf::Color& aColorA, sf::Color& aColorB, float t) {
 	return sf::Color(Lerp(aColorA.r, aColorB.r, t), Lerp(aColorA.g, aColorB.g, t), Lerp(aColorA.b, aColorB.b, t), Lerp(aColorA.a, aColorB.a, t));
 }
 
-const bool ImageChunk::sShouldLerpColors = false;
-
 sf::Image ImageChunk::GetMapColors() {
 	sf::Image ReturnImage;
 	ReturnImage.loadFromFile("ColorMap.png");
 
 	return ReturnImage;
 }
+sf::Color ImageChunk::GetColor(float x, float y) const {
+	return sMapColors.getPixel(x * sMapColors.getSize().x, y * sMapColors.getSize().y);
+}
 sf::Image ImageChunk::sMapColors = ImageChunk::GetMapColors();
 
 
 ImageChunk::ImageChunk() :
-	mImage(sf::Image())
+	Chunk(),
+	mImage(sf::Image()),
+	mDrawRectangle(sf::RectangleShape()),
+	mTexture(sf::Texture())
 {}
 
 
@@ -68,71 +72,42 @@ void ImageChunk::ApplyData() {
 void ImageChunk::ApplyArea(ImageChunk* aChunk, size_t aStartX, size_t aStartY, size_t aEndX, size_t aEndY) {
 	for (int x = aStartX; x < aEndX; x++) {
 		for (int y = aStartY; y < aEndY; y++) {
-			
 			//if(x < 2 || y < 2) {
 			//mImage.setPixel(x, y, sf::Color());
 			//continue;
 			//}
 
-
 			float HeightValue = aChunk->GetData(x, y, DataType::Height);
 			float DryValue = aChunk->GetData(x, y, DataType::Dryness);
-			sf::Color PixelColor;
 
-			if (sShouldLerpColors) {
-				float HeightValueLerp = HeightValue * (sMapColors.getSize().x - 1);
-				int HeightValueMin = std::floorf(HeightValueLerp);
-				HeightValueLerp -= HeightValueMin;
-				int HeightValueMax = HeightValueMin + 1;
+			sf::Color PixelColor = aChunk->GetColor(HeightValue, DryValue);//sMapColors.getPixel(HeightValue * sMapColors.getSize().x, DryValue * sMapColors.getSize().y);
+			//sf::Color PixelColor = sf::Color(128, 128, 128);
+			//sf::Color PixelColor = sf::Color(255 * HeightValue, 255 * HeightValue, 255 * HeightValue);
 
-				float DryValueLerp = DryValue * (sMapColors.getSize().y - 1);
-				int DryValueMin = std::floorf(DryValueLerp);
-				DryValueLerp -= DryValueMin;
-				int DryValueMax = DryValueMin + 1;
+			// Shadow test
 
-				PixelColor = LerpColors(
-					LerpColors(
-						sMapColors.getPixel(HeightValueMin, DryValueMin),
-						sMapColors.getPixel(HeightValueMax, DryValueMin),
-						HeightValueLerp
-						),
-					LerpColors(
-						sMapColors.getPixel(HeightValueMin, DryValueMax),
-						sMapColors.getPixel(HeightValueMax, DryValueMax),
-						HeightValueLerp
-						),
-					DryValueLerp
-				);
-			} else {
-				PixelColor = sMapColors.getPixel(HeightValue * sMapColors.getSize().x, DryValue * sMapColors.getSize().y);
-				//PixelColor = sf::Color(128, 128, 128);
-				//PixelColor = sf::Color(255 * HeightValue, 255 * HeightValue, 255 * HeightValue);
+			//if (HeightValue > 0.5f) {
+			//	const size_t PixelDistance = 1;//std::fmaxf(1, (100 * aChunk->GetResolution()) / aChunk->GetSize());//std::ceilf(((ShadowLength / GetSize()) * GetResolution()));
 
-				// Shadow test
+			//	float HeightX0 = aChunk->GetData(std::fmaxf(x - PixelDistance, 0), y, DataType::Height);
+			//	float HeightX1 = aChunk->GetData(std::fminf(x + PixelDistance, aChunk->GetResolution() - 1), y, DataType::Height);
 
-				//if (HeightValue > 0.5f) {
-				//	const size_t PixelDistance = std::fmaxf(1, (100 * aChunk->GetResolution()) / aChunk->GetSize());//std::ceilf(((ShadowLength / GetSize()) * GetResolution()));
+			//	float HeightY0 = aChunk->GetData(x, std::fmaxf(y - PixelDistance, 0), DataType::Height);
+			//	float HeightY1 = aChunk->GetData(x, std::fminf(y + PixelDistance, aChunk->GetResolution() - 1), DataType::Height);
 
-				//	float HeightX0 = aChunk->GetData(std::fmaxf(x - PixelDistance, 0), y, DataType::Height);
-				//	float HeightX1 = aChunk->GetData(std::fminf(x + PixelDistance, aChunk->GetResolution() - 1), y, DataType::Height);
+			//	const float WeightX = 1.f;
+			//	const float WeightY = 0.75f;
 
-				//	float HeightY0 = aChunk->GetData(x, std::fmaxf(y - PixelDistance, 0), DataType::Height);
-				//	float HeightY1 = aChunk->GetData(x, std::fminf(y + PixelDistance, aChunk->GetResolution() - 1), DataType::Height);
+			//	float DarkenValue = 1.f - std::fminf(std::fmaxf(0.f, (20000.f * (WeightX * (HeightX0 - HeightX1) + WeightY * (HeightY0 - HeightY1)) / aChunk->GetResolution()) * (HeightValue - 0.5f) * 2.f - 0.005f), 1.f);
 
-				//	const float WeightX = 1.f;
-				//	const float WeightY = 0.75f;
+			//	//PixelColor.r = std::fminf(255, PixelColor.r * DarkenValue);
+			//	//PixelColor.g = std::fminf(255, PixelColor.g * DarkenValue);
+			//	//PixelColor.b = std::fminf(255, PixelColor.b * DarkenValue);
 
-				//	float DarkenValue = 1.f - std::fminf(std::fmaxf(0.f, (2000.f * (WeightX * (HeightX0 - HeightX1) + WeightY * (HeightY0 - HeightY1)) / aChunk->GetResolution()) * (HeightValue - 0.5f) * 2.f - 0.005f), 1.f);
-
-				//	//PixelColor.r = std::fminf(255, PixelColor.r * DarkenValue);
-				//	//PixelColor.g = std::fminf(255, PixelColor.g * DarkenValue);
-				//	//PixelColor.b = std::fminf(255, PixelColor.b * DarkenValue);
-
-				//	PixelColor.r *= DarkenValue;
-				//	PixelColor.g *= DarkenValue;
-				//	PixelColor.b *= DarkenValue;
-				//}
-			}
+			//	PixelColor.r *= DarkenValue;
+			//	PixelColor.g *= DarkenValue;
+			//	PixelColor.b *= DarkenValue;
+			//}
 
 			aChunk->mImage.setPixel(x, y, PixelColor);
 		}

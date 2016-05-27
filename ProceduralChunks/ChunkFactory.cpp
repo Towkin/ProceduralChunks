@@ -1,6 +1,6 @@
 #include "ChunkFactory.h"
 #include "TerrainChunk.h"
-#include "LayerChunk.h"
+#include "ImageLayerChunk.h"
 #include "Noise.h"
 #include <iostream>
 #include <SFML/System/Clock.hpp>
@@ -14,13 +14,14 @@ const unsigned int ChunkFactory::sHeightOctaves = 16;
 const unsigned int ChunkFactory::sHeightSeed = (unsigned int)time(NULL);
 //const unsigned int ChunkFactory::sHeightSeed = 789432;
 const float ChunkFactory::sHeightLacunarity = 2.85f;
-const float ChunkFactory::sHeightPersistance = 0.55f;
+const float ChunkFactory::sHeightPersistance = 0.45f;
 
 
 
 const float ChunkFactory::sDryBaseFrequency = 1.f / 100000;
 //const float ChunkFactory::sDryBaseFrequency = 1.f / 10000000;
 const unsigned int ChunkFactory::sDryOctaves = 7;
+//const unsigned int ChunkFactory::sDryOctaves = 2;
 const unsigned int ChunkFactory::sDrySeed = (unsigned int)time(NULL) + 128;
 //const unsigned int ChunkFactory::sDrySeed = 98743267;
 const float ChunkFactory::sDryLacunarity = 3.1f;
@@ -38,7 +39,7 @@ std::vector<Chunk*> ChunkFactory::sImageChunks = std::vector<Chunk*>();
 void ChunkFactory::RemoveChunk(Chunk* aChunk) {
 	for (size_t i = 0; i < sImageChunks.size(); i++) {
 		if (sImageChunks[i] == aChunk) {
-			std::cout << aChunk->GetLayer();
+			std::cout << "*";
 			sImageChunks[i] = sImageChunks.back();
 			sImageChunks.pop_back();
 			break;
@@ -70,7 +71,7 @@ Chunk* ChunkFactory::GenerateChunk(float aX, float aY, float aSize, int aResolut
 	Chunk* ReturnChunk;
 	if (aImage) {
 		if (aLayer > 0) {
-			LayerChunk* NewLayerChunk = new LayerChunk();
+			ImageLayerChunk* NewLayerChunk = new ImageLayerChunk();
 			NewLayerChunk->SetLayer(aLayer);
 			NewLayerChunk->SetChunksResolution(4);
 
@@ -80,6 +81,7 @@ Chunk* ChunkFactory::GenerateChunk(float aX, float aY, float aSize, int aResolut
 		}
 		sImageChunks.push_back(ReturnChunk);
 	} else {
+
 		ReturnChunk = new TerrainChunk();
 	}
 

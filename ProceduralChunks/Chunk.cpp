@@ -50,8 +50,13 @@ void Chunk::Tick() {
 }
 
 Chunk::Chunk() :
-	mData(std::map<DataType, std::vector<float>>()),
-	mResolution(0)
+	mX(0), mY(0),
+	mChunkSize(0),
+
+	mData(),
+	mResolution(0),
+
+	mParent(nullptr)
 {}
 
 

@@ -3,7 +3,12 @@
 
 bool LayerChunk::sUglyHasLoaded = false;
 
-LayerChunk::LayerChunk() {}
+LayerChunk::LayerChunk():
+	Chunk(),
+	mChunks(),
+	mChunksResolution(0),
+	mLayer(0)
+{}
 
 
 LayerChunk::~LayerChunk() {
@@ -35,7 +40,7 @@ float Clamp(float value, float min, float max) {
 }
 void LayerChunk::Draw(sf::RenderTarget* aRenderer, sf::FloatRect aRenderRect) {
 	
-	ImageChunk::Draw(aRenderer, aRenderRect);
+	//ImageChunk::Draw(aRenderer, aRenderRect);
 	
 	if ((aRenderer->getSize().x / GetResolution()) * (GetSize() / aRenderRect.width) > 1.5f ||
 		(aRenderer->getSize().y / GetResolution()) * (GetSize() / aRenderRect.height) > 1.5f) {
@@ -73,7 +78,7 @@ Chunk* LayerChunk::GetChunk(size_t aX, size_t aY) {
 	Chunk* ReturnChunk = nullptr;
 	if (ValidChunk(aX, aY)) {
 		if (mChunks[aX + GetChunksResolution() * aY] == nullptr && !sUglyHasLoaded) {
-			mChunks[aX + GetChunksResolution() * aY] = ChunkFactory::GenerateChunk(GetX() + aX * GetChildSize(), GetY() + aY * GetChildSize(), GetChildSize(), GetResolution(), GetLayer() - 1);
+			mChunks[aX + GetChunksResolution() * aY] = ChunkFactory::GenerateChunk(GetX() + aX * GetChildSize(), GetY() + aY * GetChildSize(), GetChildSize(), GetResolution(), GetLayer() - 1, IsImage());
 			mChunks[aX + GetChunksResolution() * aY]->SetParent(this);
 			sUglyHasLoaded = true;
 		}

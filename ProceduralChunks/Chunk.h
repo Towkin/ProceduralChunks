@@ -53,7 +53,7 @@ public:
 
 	unsigned int GetTick() const { return mLastTick; }
 
-	static void MasterTick() { ++sMasterTick; }
+	static void MasterTick() { sMasterTick++; }
 
 	Chunk();
 	virtual ~Chunk();
