@@ -44,7 +44,7 @@ void ChunkFactory::SetupNoiseSettings() {
 	std::vector<std::string> NoiseSettingsLines;
 
 	std::ifstream NoiseSettingsStream;
-	NoiseSettingsStream.open("NoiseSettings.txt");
+	NoiseSettingsStream.open("Assets/NoiseSettings.txt");
 
 	if (NoiseSettingsStream.is_open()) {
 		std::cout << "\nReading noise settings...\n";

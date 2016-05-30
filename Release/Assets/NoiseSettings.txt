@@ -1,0 +1,52 @@
+! Noise settings file. Use ! to comment.
+! If a value is missing, thre program will default it.
+! Value descriptions are below the values sections.
+
+
+!HeightMap values
+fHeightFrequency = 0.0000025
+fHeightLacunarity = 2.85
+fHeightPersistance = 0.45
+!uHeightOctaves = 16
+uHeightOctaves = 12
+! Comment seed to use random seed.
+uHeightSeed = 6783287
+
+!DryMap values
+fDryFrequency = 0.00001
+fDryLacunarity = 3.1
+fDryPersistance = 0.4
+uDryOctaves = 7
+! Comment seed to use random seed.
+uDrySeed = 78234281
+
+
+
+! Value explainations:
+
+! Frequency: The base frequency of the "noise wave".
+! Normally a very low value (0.0000025 by default), but can be "high" (around 1.0...10.0) with "inverted" lacunarity and persistance.
+
+! Lacunarity: The frequency factor per octave. 
+! 	Example: With a frequency of 0.05, and a lacunarity of 2.0, you'd get the following result:
+!		Octave 1: 0.05
+!		Octave 2: 0.1
+!		Octave 3: 0.2
+!		Octave 4: 0.4
+!		etc...
+
+! Persistance: Determines how much each octave affects the value. 
+! Normally in range of 0...1, can be more, should not be negative.
+!	Example: With a Persistance of 0.4, and 4 Octaves:
+! 		Octave 1: 1.000 (61.6%) 
+!		Octave 2: 0.400 (24.6%)
+!		Octave 3: 0.160 (9.9%)
+!		Octave 4: 0.064 (3.9%)
+
+! Octaves: The number of runs the algorithm should do per point.
+! More octaves often means higher precision, however, does also affect performance. Normally about 8...16.
+
+! Seed: The base seed used to scramble the hash. Remove or comment out to get seed based on time.
+
+
+
