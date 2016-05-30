@@ -51,8 +51,9 @@ public:
 	virtual void Draw(sf::RenderTarget* aRenderer, sf::FloatRect aRenderRect) {}
 	virtual void Tick();
 
+	// TODO: Rework tick system
 	unsigned int GetTick() const { return mLastTick; }
-
+	// TODO: Rework tick system
 	static void MasterTick() { sMasterTick++; }
 
 	Chunk();
