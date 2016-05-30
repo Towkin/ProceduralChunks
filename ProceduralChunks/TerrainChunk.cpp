@@ -7,11 +7,11 @@ std::string TerrainChunk::sErrorTerrain = "Error";
 std::map<sf::Uint32, std::string> TerrainChunk::sTerrainColors;
 
 void TerrainChunk::SetupTerrainColors() {
-	sTerrainMap.loadFromFile("TerrainMap.png");
+	sTerrainMap.loadFromFile("Assets/TerrainMap.png");
 	
 	std::ifstream TerrainColorStream;
 
-	TerrainColorStream.open("TerrainColor.txt");
+	TerrainColorStream.open("Assets/TerrainColor.txt");
 	if (TerrainColorStream.is_open()) {
 		std::string ColorString;
 		while (std::getline(TerrainColorStream, ColorString)) {

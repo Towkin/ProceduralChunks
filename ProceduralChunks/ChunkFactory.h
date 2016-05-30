@@ -33,6 +33,9 @@ private:
 	static void GenerateArea(Chunk* aChunk, int aStartX, int aStartY, float aX, float aY, float aIncrement, int aResolution);
 	static float GenerateHeightPoint(float aX, float aY);
 	static float GenerateDrynessPoint(float aX, float aY);
+
+	static float GetModifierHeight(float aX, float aY);
+	static float GetModifierDryness(float aX, float aY);
 public:
 	static Chunk* GenerateChunk(float aX, float aY, float aSize, int aResolution, unsigned int aLayer, bool aImage = true);
 

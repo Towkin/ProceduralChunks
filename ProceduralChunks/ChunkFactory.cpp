@@ -57,6 +57,7 @@ bool LastTickFirst(Chunk* a, Chunk* b) {
 	return a->GetTick() != b->GetTick() ? a->GetTick() > b->GetTick() : a->GetLayer() < b->GetLayer();
 }
 
+
 Chunk* ChunkFactory::GenerateChunk(float aX, float aY, float aSize, int aResolution, unsigned int aLayer, bool aImage) {
 
 	sf::Clock Timer;
@@ -126,6 +127,7 @@ Chunk* ChunkFactory::GenerateChunk(float aX, float aY, float aSize, int aResolut
 		//sDryMin = DryMin;
 
 		sMinMaxInit = true;
+		std::cout << "Height - Max: " << sHeightMax << ", Min: " << sHeightMin << "\nDryness - Max: " << sDryMax << ", Min: " << sDryMin << ".\n";
 	}
 
 	const size_t ThreadCountBase = 4;
@@ -170,14 +172,23 @@ void ChunkFactory::GenerateArea(Chunk* aChunk, int aStartX, int aStartY, float a
 float ChunkFactory::GenerateHeightPoint(float aX, float aY) {
 	float Coords[2]{ aX, aY };
 	if (sMinMaxInit) {
-		return std::fminf(std::fmaxf((std::powf(Noise::Perlin(Coords, 2, sHeightBaseFrequency, sHeightOctaves, sHeightSeed, sHeightLacunarity, sHeightPersistance) * 0.5f + 0.5f, 2.f) - sHeightMin) / (sHeightMax - sHeightMin), 0.f), 0.9999f);
+		return std::fminf(std::fmaxf((GetModifierHeight(aX, aY) * (Noise::Perlin(Coords, 2, sHeightBaseFrequency, sHeightOctaves, sHeightSeed, sHeightLacunarity, sHeightPersistance) * 0.5f + 0.5f) - sHeightMin) / (sHeightMax - sHeightMin), 0.f), 0.9999f);
 	}
-	return std::powf(Noise::Perlin(Coords, 2, sHeightBaseFrequency, sHeightOctaves, sHeightSeed, sHeightLacunarity, sHeightPersistance) * 0.5f + 0.5f, 2.f);
+	return GetModifierHeight(aX, aY) * (Noise::Perlin(Coords, 2, sHeightBaseFrequency, sHeightOctaves, sHeightSeed, sHeightLacunarity, sHeightPersistance) * 0.5f + 0.5f);
 }
 float ChunkFactory::GenerateDrynessPoint(float aX, float aY) {
 	float Coords[2]{ aX, aY };
 	if (sMinMaxInit) {
-		return std::fminf(std::fmaxf((Noise::Perlin(Coords, 2, sDryBaseFrequency, sDryOctaves, sDrySeed, sDryLacunarity, sDryPersistance) * 0.5f + 0.5f - sDryMin) / (sDryMax - sDryMin), 0.f), 0.9999f);
+		return std::fminf(std::fmaxf((GetModifierDryness(aX, aY) * (Noise::Perlin(Coords, 2, sDryBaseFrequency, sDryOctaves, sDrySeed, sDryLacunarity, sDryPersistance) * 0.5f + 0.5f) - sDryMin) / (sDryMax - sDryMin), 0.f), 0.9999f);
 	}
-	return Noise::Perlin(Coords, 2, sDryBaseFrequency, sDryOctaves, sDrySeed, sDryLacunarity, sDryPersistance) * 0.5f + 0.5f;
+	return GetModifierDryness(aX, aY) * (Noise::Perlin(Coords, 2, sDryBaseFrequency, sDryOctaves, sDrySeed, sDryLacunarity, sDryPersistance) * 0.5f + 0.5f);
+}
+
+
+float ChunkFactory::GetModifierHeight(float aX, float aY) {
+	return 1.0f;
+}
+
+float ChunkFactory::GetModifierDryness(float aX, float aY) {
+	return 1.0f;
 }

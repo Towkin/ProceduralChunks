@@ -13,7 +13,7 @@ sf::Color LerpColors(sf::Color& aColorA, sf::Color& aColorB, float t) {
 
 sf::Image ImageChunk::GetMapColors() {
 	sf::Image ReturnImage;
-	ReturnImage.loadFromFile("ColorMap.png");
+	ReturnImage.loadFromFile("Assets/ColorMap.png");
 
 	return ReturnImage;
 }

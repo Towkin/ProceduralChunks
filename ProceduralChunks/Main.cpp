@@ -25,7 +25,7 @@ int main() {
 	OverlayImage.create(DataChunk->GetResolution(), DataChunk->GetResolution());
 
 	sf::Font TextFont;
-	TextFont.loadFromFile("falconpunch.ttf");
+	TextFont.loadFromFile("Assets/MeterFont.ttf");
 	
 
 	sf::Uint8 Opacity = 128;
