@@ -49,8 +49,7 @@ const int* Noise::GetHash(unsigned int aSeed) {
 		const size_t HashSize = (sHashMask + 1) * 2;
 		const size_t HashSizeHalf = HashSize / 2;
 
-		// Stupid? I think so... But I could see no better way to keep the values outside this context.
-		std::array<int, HashSize>& Hash = (*new std::array<int, HashSize>());
+		std::array<int, HashSize> Hash = std::array<int, HashSize>();
 
 		// Initiate values
 		for (int i = 0; i < HashSizeHalf; i++) {
@@ -64,7 +63,13 @@ const int* Noise::GetHash(unsigned int aSeed) {
 			Hash[i + HashSizeHalf] = Hash[i];
 		}
 
-		sHashes[aSeed] = Hash.data();
+		// Make dynamic - stupid? I think so, we won't need to std::array stuff anymore...
+		int* StaticHash = new int[HashSize];
+		for (int i = 0; i < HashSize; i++) {
+			StaticHash[i] = Hash[i];
+		}
+
+		sHashes[aSeed] = StaticHash;
 	}
 
 	return sHashes[aSeed];

@@ -11,9 +11,10 @@ int main() {
 	float WorldSize = 250000.f;
 	float Offset = WorldSize / (ChunkRes * 8 * 2);
 	TerrainChunk::SetupTerrainColors();
+	ChunkFactory::SetupNoiseSettings();
 
-	Chunk* BaseChunk = ChunkFactory::GenerateChunk(0, 0, WorldSize, ChunkRes, 5);
-	TerrainChunk* DataChunk = (TerrainChunk*)ChunkFactory::GenerateChunk(Offset, Offset, WorldSize, ChunkRes * 8, 0, false);
+	Chunk* BaseChunk = ChunkFactory::GenerateChunk(0, 0, WorldSize, ChunkRes, 5, true, false);
+	TerrainChunk* DataChunk = (TerrainChunk*)ChunkFactory::GenerateChunk(Offset, Offset, WorldSize, ChunkRes * 8, 0, false, false);
 
 	sf::RenderWindow MainWindow(sf::VideoMode(1024, 800), "Chunks!!!");
 	MainWindow.setFramerateLimit(60);
@@ -28,31 +29,19 @@ int main() {
 	TextFont.loadFromFile("Assets/MeterFont.ttf");
 	
 
-	sf::Uint8 Opacity = 128;
+	sf::Uint8 Opacity = 255;
 	for (size_t x = 0; x < DataChunk->GetResolution(); x++) {
 		for (size_t y = 0; y < DataChunk->GetResolution(); y++) {
-			std::string TerrainType = DataChunk->GetTerrainData(x, y);
-			if (TerrainType == TerrainChunk::sErrorTerrain) {
-				OverlayImage.setPixel(x, y, sf::Color(255, 0, 0, 255));
-			} else {
-				for (auto it = TerrainChunk::sTerrainColors.begin(); it != TerrainChunk::sTerrainColors.end(); it++) {
-					if (it->second == TerrainType) {
-						sf::Color PixelColor(it->first);
-						PixelColor.a = Opacity;
-						OverlayImage.setPixel(x, y, PixelColor);
-						break;
-					}
-				}
-				
-			}
-			//OverlayImage.setPixel(x, y, TerrainColors[TerrainType]);
+			sf::Color PixelColor = TerrainChunk::GetTerrainColor(DataChunk->GetTerrainData(x, y));
+			PixelColor.a = Opacity;
+			OverlayImage.setPixel(x, y, PixelColor);
 		}
 	}
 
 	sf::Texture OverlayTexture;
 	OverlayTexture.loadFromImage(OverlayImage);
 
-	sf::RectangleShape MapOverlay(sf::Vector2f(512, 512));
+	sf::RectangleShape MapOverlay(sf::Vector2f(ChunkRes, ChunkRes));
 	MapOverlay.setTexture(&OverlayTexture);
 	MapOverlay.setScale(sf::Vector2f(BaseChunk->GetSize() / BaseChunk->GetResolution(), BaseChunk->GetSize() / BaseChunk->GetResolution()));
 

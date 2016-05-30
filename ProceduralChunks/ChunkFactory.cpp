@@ -7,25 +7,84 @@
 #include <thread>
 #include <algorithm>
 
-const float ChunkFactory::sHeightBaseFrequency = 1.f / 350000;
-//const unsigned int ChunkFactory::sHeightOctaves = 10;
-//const float ChunkFactory::sHeightBaseFrequency = 1.f / 15000000;
-const unsigned int ChunkFactory::sHeightOctaves = 16;
-const unsigned int ChunkFactory::sHeightSeed = (unsigned int)time(NULL);
-//const unsigned int ChunkFactory::sHeightSeed = 789432;
-const float ChunkFactory::sHeightLacunarity = 2.85f;
-const float ChunkFactory::sHeightPersistance = 0.45f;
+#include <fstream>
+#include <string>
 
+std::map<std::string, float*> ChunkFactory::sFloatValues = std::map<std::string, float*>{
+	std::pair<std::string, float*>("fHeightFrequency", &ChunkFactory::sHeightBaseFrequency),
+	std::pair<std::string, float*>("fHeightLacunarity", &ChunkFactory::sHeightLacunarity),
+	std::pair<std::string, float*>("fHeightPersistance", &ChunkFactory::sHeightPersistance),
 
+	std::pair<std::string, float*>("fDryFrequency", &ChunkFactory::sDryBaseFrequency),
+	std::pair<std::string, float*>("fDryLacunarity", &ChunkFactory::sDryLacunarity),
+	std::pair<std::string, float*>("fDryPersistance", &ChunkFactory::sDryPersistance)
+};
 
-const float ChunkFactory::sDryBaseFrequency = 1.f / 100000;
-//const float ChunkFactory::sDryBaseFrequency = 1.f / 10000000;
-const unsigned int ChunkFactory::sDryOctaves = 7;
-//const unsigned int ChunkFactory::sDryOctaves = 2;
-const unsigned int ChunkFactory::sDrySeed = (unsigned int)time(NULL) + 128;
-//const unsigned int ChunkFactory::sDrySeed = 98743267;
-const float ChunkFactory::sDryLacunarity = 3.1f;
-const float ChunkFactory::sDryPersistance = 0.4f;
+std::map<std::string, unsigned int*> ChunkFactory::sUnsignedIntValues = std::map<std::string, unsigned int*>{
+	std::pair<std::string, unsigned int*>("uHeightOctaves", &ChunkFactory::sHeightOctaves),
+	std::pair<std::string, unsigned int*>("uHeightSeed", &ChunkFactory::sHeightSeed),
+
+	std::pair<std::string, unsigned int*>("uDryOctaves", &ChunkFactory::sDryOctaves),
+	std::pair<std::string, unsigned int*>("uDrySeed", &ChunkFactory::sDrySeed)
+};
+
+float ChunkFactory::sHeightBaseFrequency = 1.f / 400000;
+unsigned int ChunkFactory::sHeightOctaves = 16;
+unsigned int ChunkFactory::sHeightSeed = (unsigned int)time(NULL);
+float ChunkFactory::sHeightLacunarity = 2.85f;
+float ChunkFactory::sHeightPersistance = 0.45f;
+
+float ChunkFactory::sDryBaseFrequency = 1.f / 100000;
+unsigned int ChunkFactory::sDryOctaves = 7;
+unsigned int ChunkFactory::sDrySeed = (unsigned int)time(NULL) + 128;
+float ChunkFactory::sDryLacunarity = 3.1f;
+float ChunkFactory::sDryPersistance = 0.4f;
+
+void ChunkFactory::SetupNoiseSettings() {
+	std::vector<std::string> NoiseSettingsLines;
+
+	std::ifstream NoiseSettingsStream;
+	NoiseSettingsStream.open("NoiseSettings.txt");
+
+	if (NoiseSettingsStream.is_open()) {
+		std::cout << "\nReading noise settings...\n";
+
+		std::string SettingsLine;
+		while (std::getline(NoiseSettingsStream, SettingsLine)) {
+			if (SettingsLine.size() < 1 || SettingsLine[0] == '!' || SettingsLine.find('=') == SettingsLine.npos) {
+				std::cout << "Skipped line '" + SettingsLine + "'.\n";
+				continue;
+			}
+			std::cout << "Added line '" + SettingsLine + "'.\n";
+			NoiseSettingsLines.push_back(SettingsLine);
+		}
+		NoiseSettingsStream.close();
+	} else {
+		std::cout << "Couldn't open file NoiseSettings.txt.\n";
+	}
+	
+	for (std::string Line : NoiseSettingsLines) {
+		size_t OperatorIndex = Line.find('=');
+		std::string Name = Line.substr(0, OperatorIndex);
+		std::string Value = Line.substr(OperatorIndex + 1);
+
+		size_t FirstWhiteSpace = Name.find_first_not_of(' ');
+		size_t LastNonWhiteSpace = Name.find_last_not_of(' ');
+		
+		Name = Name.substr(FirstWhiteSpace, LastNonWhiteSpace - FirstWhiteSpace + 1);
+
+		if (sFloatValues.find(Name) != sFloatValues.end()) {
+			(*sFloatValues[Name]) = std::stof(Value);
+			std::cout << "Found variable " + Name + ", which was assigned value " << std::stof(Value) << ".\n";
+		} else if (sUnsignedIntValues.find(Name) != sUnsignedIntValues.end()) {
+			(*sUnsignedIntValues[Name]) = std::stoul(Value);
+			std::cout << "Found variable " + Name + ", which was assigned value " << std::stoul(Value) << ".\n";
+		} else {
+			std::cout << "No variable named " + Name + " was found.\n";
+		}
+	}
+}
+
 
 bool ChunkFactory::sMinMaxInit = false;
 float ChunkFactory::sHeightMax = 0.f;
@@ -34,38 +93,31 @@ float ChunkFactory::sDryMax = 0.f;
 float ChunkFactory::sDryMin = 1.f;
 
 const size_t ChunkFactory::sChunkMaxCount = 256;
-std::vector<Chunk*> ChunkFactory::sImageChunks = std::vector<Chunk*>();
+std::vector<Chunk*> ChunkFactory::sRemovableChunks = std::vector<Chunk*>();
 
 void ChunkFactory::RemoveChunk(Chunk* aChunk) {
-	for (size_t i = 0; i < sImageChunks.size(); i++) {
-		if (sImageChunks[i] == aChunk) {
+	for (size_t i = 0; i < sRemovableChunks.size(); i++) {
+		if (sRemovableChunks[i] == aChunk) {
 			std::cout << "*";
-			sImageChunks[i] = sImageChunks.back();
-			sImageChunks.pop_back();
+			sRemovableChunks[i] = sRemovableChunks.back();
+			sRemovableChunks.pop_back();
 			break;
 		}
 	}
 }
 
-
-ChunkFactory::ChunkFactory() {}
-
-
-ChunkFactory::~ChunkFactory() {}
-
 bool LastTickFirst(Chunk* a, Chunk* b) {
 	return a->GetTick() != b->GetTick() ? a->GetTick() > b->GetTick() : a->GetLayer() < b->GetLayer();
 }
 
-
-Chunk* ChunkFactory::GenerateChunk(float aX, float aY, float aSize, int aResolution, unsigned int aLayer, bool aImage) {
+Chunk* ChunkFactory::GenerateChunk(float aX, float aY, float aSize, int aResolution, unsigned int aLayer, bool aImage, bool aRemovable) {
 
 	sf::Clock Timer;
 
-	if (sImageChunks.size() >= sChunkMaxCount) {
-		std::sort(sImageChunks.begin(), sImageChunks.end(), LastTickFirst);
+	if (aRemovable && sRemovableChunks.size() >= sChunkMaxCount) {
+		std::sort(sRemovableChunks.begin(), sRemovableChunks.end(), LastTickFirst);
 		std::cout << "Removing elements... ";
-		delete sImageChunks.back();
+		delete sRemovableChunks.back();
 		std::cout << "\n";
 	}
 
@@ -80,7 +132,6 @@ Chunk* ChunkFactory::GenerateChunk(float aX, float aY, float aSize, int aResolut
 		} else {
 			ReturnChunk = new ImageChunk();
 		}
-		sImageChunks.push_back(ReturnChunk);
 	} else {
 
 		ReturnChunk = new TerrainChunk();
@@ -89,6 +140,10 @@ Chunk* ChunkFactory::GenerateChunk(float aX, float aY, float aSize, int aResolut
 	ReturnChunk->SetResolution(aResolution);
 	ReturnChunk->SetPosition(aX, aY);
 	ReturnChunk->SetSize(aSize);
+
+	if (aRemovable) {
+		sRemovableChunks.push_back(ReturnChunk);
+	}
 
 	float Increment = aSize / aResolution;
 
