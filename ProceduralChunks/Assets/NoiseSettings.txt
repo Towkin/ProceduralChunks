@@ -10,7 +10,7 @@ fHeightPersistance = 0.45
 !uHeightOctaves = 16
 uHeightOctaves = 12
 ! Comment seed to use random seed.
-uHeightSeed = 6783287
+!uHeightSeed = 6783287
 
 !DryMap values
 fDryFrequency = 0.00001
@@ -18,7 +18,7 @@ fDryLacunarity = 3.1
 fDryPersistance = 0.4
 uDryOctaves = 7
 ! Comment seed to use random seed.
-uDrySeed = 78234281
+!uDrySeed = 78234281
 
 
 

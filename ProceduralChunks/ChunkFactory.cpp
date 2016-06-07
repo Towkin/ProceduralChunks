@@ -149,25 +149,17 @@ Chunk* ChunkFactory::GenerateChunk(float aX, float aY, float aSize, int aResolut
 
 	
 	if (!sMinMaxInit) {
-		
-		//float HeightMax = 0.f;
-		//float HeightMin = 1.f;
-		//float DryMax = 0.f;
-		//float DryMin = 1.f;
+		const size_t MinMaxFinderRes = 1024;
 
-		for (int x = 0; x < aResolution; x++) {
+		for (int x = 0; x < MinMaxFinderRes; x++) {
 			float cX = aX + (float)x * Increment;
-			for (int y = 0; y < aResolution; y++) {
+			for (int y = 0; y < MinMaxFinderRes; y++) {
 				float cY = aY + (float)y * Increment;
 
 				float Height = GenerateHeightPoint(cX, cY);
 				float Dryness = GenerateDrynessPoint(cX, cY);
 
-				//HeightMax = std::fmaxf(Height, HeightMax);
-				//HeightMin = std::fminf(Height, HeightMin);
 
-				//DryMax = std::fmaxf(Dryness, DryMax);
-				//DryMin = std::fminf(Dryness, DryMin);
 				sHeightMax = std::fmaxf(Height, sHeightMax);
 				sHeightMin = std::fminf(Height, sHeightMin);
 
@@ -176,17 +168,11 @@ Chunk* ChunkFactory::GenerateChunk(float aX, float aY, float aSize, int aResolut
 			}
 		}
 
-		//sHeightMax = HeightMax; 
-		//sHeightMin = HeightMin;
-		//sDryMax = DryMax; 
-		//sDryMin = DryMin;
-
 		sMinMaxInit = true;
 		std::cout << "Height - Max: " << sHeightMax << ", Min: " << sHeightMin << "\nDryness - Max: " << sDryMax << ", Min: " << sDryMin << ".\n";
 	}
 
-	const size_t ThreadCountBase = 4;
-	const size_t ThreadCount = ThreadCountBase * ThreadCountBase;
+	const size_t ThreadCount = 8;
 
 	std::thread Threads[ThreadCount];
 
@@ -194,9 +180,11 @@ Chunk* ChunkFactory::GenerateChunk(float aX, float aY, float aSize, int aResolut
 		Threads[i] = std::thread(
 			GenerateArea, 
 			ReturnChunk, 
-			(i % ThreadCountBase) * (aResolution / ThreadCountBase),
-			(i / ThreadCountBase) * (aResolution / ThreadCountBase),
-			aX, aY, Increment, aResolution / ThreadCountBase
+			i * (aResolution / ThreadCount),
+			0,
+			(i == (ThreadCount - 1) ? aResolution : (i + 1) * (aResolution / ThreadCount)),
+			aResolution,
+			aX, aY, Increment
 		);
 	}
 
@@ -211,11 +199,11 @@ Chunk* ChunkFactory::GenerateChunk(float aX, float aY, float aSize, int aResolut
 	return ReturnChunk;
 }
 
-void ChunkFactory::GenerateArea(Chunk* aChunk, int aStartX, int aStartY, float aX, float aY, float aIncrement, int aResolution) {
-	for (int x = aStartX; x < aStartX + aResolution; x++) {
+void ChunkFactory::GenerateArea(Chunk* aChunk, int aStartX, int aStartY, int aEndX, int aEndY, float aX, float aY, float aIncrement) {
+	for (int x = aStartX; x < aEndX; x++) {
 		float cX = aX + (float)x * aIncrement;
-
-		for (int y = aStartY; y < aStartY + aResolution; y++) {
+		
+		for (int y = aStartY; y < aEndY; y++) {
 			float cY = aY + (float)y * aIncrement;
 			
 			aChunk->SetData(x, y, Chunk::Height, GenerateHeightPoint(cX, cY));

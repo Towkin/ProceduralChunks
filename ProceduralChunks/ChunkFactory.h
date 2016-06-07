@@ -35,7 +35,7 @@ private:
 	static std::vector<Chunk*> sRemovableChunks;
 
 	
-	static void GenerateArea(Chunk* aChunk, int aStartX, int aStartY, float aX, float aY, float aIncrement, int aResolution);
+	static void GenerateArea(Chunk* aChunk, int aStartX, int aStartY, int aEndX, int aEndY, float aX, float aY, float aIncrement);
 	static float GenerateHeightPoint(float aX, float aY);
 	static float GenerateDrynessPoint(float aX, float aY);
 

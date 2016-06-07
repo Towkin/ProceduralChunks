@@ -1,17 +1,17 @@
 <?xml version="1.0"?><doc>
 <members>
-<member name="T:sf.Window" decl="false" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="54">
+<member name="T:sf.Window" decl="false" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="54">
 \brief Window that serves as a target for OpenGL rendering
 
 </member>
-<member name="M:sf.Window.#ctor" decl="true" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="62">
+<member name="M:sf.Window.#ctor" decl="true" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="62">
 \brief Default constructor
 
 This constructor doesn't actually create the window,
 use the other constructors or call create() to do so.
 
 </member>
-<member name="M:sf.Window.#ctor(sf.VideoMode,sf.String!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,System.UInt32,sf.ContextSettings!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)" decl="true" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="71">
+<member name="M:sf.Window.#ctor(sf.VideoMode,sf.String!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,System.UInt32,sf.ContextSettings!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)" decl="true" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="71">
 \brief Construct a new window
 
 This constructor creates the window with the size and pixel
@@ -30,7 +30,7 @@ depth-buffer bits, etc.
 \param settings Additional settings for the underlying OpenGL context
 
 </member>
-<member name="M:sf.Window.#ctor(HWND__*,sf.ContextSettings!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)" decl="true" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="92">
+<member name="M:sf.Window.#ctor(HWND__*,sf.ContextSettings!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)" decl="true" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="92">
 \brief Construct the window from an existing control
 
 Use this constructor if you want to create an OpenGL
@@ -45,13 +45,13 @@ depth-buffer bits, etc.
 \param settings Additional settings for the underlying OpenGL context
 
 </member>
-<member name="M:sf.Window.Dispose" decl="true" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="109">
+<member name="M:sf.Window.Dispose" decl="true" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="109">
 \brief Destructor
 
 Closes the window and frees all the resources attached to it.
 
 </member>
-<member name="M:sf.Window.create(sf.VideoMode,sf.String!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,System.UInt32,sf.ContextSettings!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)" decl="true" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="117">
+<member name="M:sf.Window.create(sf.VideoMode,sf.String!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,System.UInt32,sf.ContextSettings!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)" decl="true" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="117">
 \brief Create (or recreate) the window
 
 If the window was already created, it closes it first.
@@ -68,7 +68,7 @@ depth-buffer bits, etc.
 \param settings Additional settings for the underlying OpenGL context
 
 </member>
-<member name="M:sf.Window.create(HWND__*,sf.ContextSettings!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)" decl="true" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="136">
+<member name="M:sf.Window.create(HWND__*,sf.ContextSettings!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)" decl="true" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="136">
 \brief Create (or recreate) the window from an existing control
 
 Use this function if you want to create an OpenGL
@@ -84,7 +84,7 @@ depth-buffer bits, etc.
 \param settings Additional settings for the underlying OpenGL context
 
 </member>
-<member name="M:sf.Window.close" decl="true" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="154">
+<member name="M:sf.Window.close" decl="true" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="154">
 \brief Close the window and destroy all the attached resources
 
 After calling this function, the sf::Window instance remains
@@ -94,7 +94,7 @@ still work (i.e. you don't have to test isOpen() every time),
 and will have no effect on closed windows.
 
 </member>
-<member name="M:sf.Window.isOpen" decl="true" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="166">
+<member name="M:sf.Window.isOpen" decl="true" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="166">
 \brief Tell whether or not the window is open
 
 This function returns whether or not the window exists.
@@ -104,7 +104,7 @@ Note that a hidden window (setVisible(false)) is open
 \return True if the window is open, false if it has been closed
 
 </member>
-<member name="M:sf.Window.getSettings" decl="true" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="178">
+<member name="M:sf.Window.getSettings" decl="true" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="178">
 \brief Get the settings of the OpenGL context of the window
 
 Note that these settings may be different from what was
@@ -115,7 +115,7 @@ SFML chose the closest match.
 \return Structure containing the OpenGL context settings
 
 </member>
-<member name="M:sf.Window.pollEvent(sf.Event*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)" decl="true" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="191">
+<member name="M:sf.Window.pollEvent(sf.Event*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)" decl="true" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="191">
 \brief Pop the event on top of the event queue, if any, and return it
 
 This function is not blocking: if there's no pending event then
@@ -138,7 +138,7 @@ while (window.pollEvent(event))
 \see waitEvent
 
 </member>
-<member name="M:sf.Window.waitEvent(sf.Event*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)" decl="true" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="216">
+<member name="M:sf.Window.waitEvent(sf.Event*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)" decl="true" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="216">
 \brief Wait for an event and return it
 
 This function is blocking: if there's no pending event then
@@ -163,7 +163,7 @@ if (window.waitEvent(event))
 \see pollEvent
 
 </member>
-<member name="M:sf.Window.getPosition" decl="true" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="243">
+<member name="M:sf.Window.getPosition" decl="true" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="243">
 \brief Get the position of the window
 
 \return Position of the window, in pixels
@@ -171,7 +171,7 @@ if (window.waitEvent(event))
 \see setPosition
 
 </member>
-<member name="M:sf.Window.setPosition(sf.Vector2&lt;System.Int32&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)" decl="true" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="253">
+<member name="M:sf.Window.setPosition(sf.Vector2&lt;System.Int32&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)" decl="true" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="253">
 \brief Change the position of the window on screen
 
 This function only works for top-level windows
@@ -183,7 +183,7 @@ the handle of a child window/control).
 \see getPosition
 
 </member>
-<member name="M:sf.Window.getSize" decl="true" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="267">
+<member name="M:sf.Window.getSize" decl="true" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="267">
 \brief Get the size of the rendering region of the window
 
 The size doesn't include the titlebar and borders
@@ -194,7 +194,7 @@ of the window.
 \see setSize
 
 </member>
-<member name="M:sf.Window.setSize(sf.Vector2&lt;System.UInt32&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)" decl="true" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="280">
+<member name="M:sf.Window.setSize(sf.Vector2&lt;System.UInt32&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)" decl="true" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="280">
 \brief Change the size of the rendering region of the window
 
 \param size New size, in pixels
@@ -202,7 +202,7 @@ of the window.
 \see getSize
 
 </member>
-<member name="M:sf.Window.setTitle(sf.String!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)" decl="true" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="290">
+<member name="M:sf.Window.setTitle(sf.String!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)" decl="true" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="290">
 \brief Change the title of the window
 
 \param title New title
@@ -210,7 +210,7 @@ of the window.
 \see setIcon
 
 </member>
-<member name="M:sf.Window.setIcon(System.UInt32,System.UInt32,System.Byte!System.Runtime.CompilerServices.IsConst*)" decl="true" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="300">
+<member name="M:sf.Window.setIcon(System.UInt32,System.UInt32,System.Byte!System.Runtime.CompilerServices.IsConst*)" decl="true" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="300">
 \brief Change the window's icon
 
 \a pixels must be an array of \a width x \a height pixels
@@ -227,7 +227,7 @@ The OS default icon is used by default.
 \see setTitle
 
 </member>
-<member name="M:sf.Window.setVisible(System.Boolean)" decl="true" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="319">
+<member name="M:sf.Window.setVisible(System.Boolean)" decl="true" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="319">
 \brief Show or hide the window
 
 The window is shown by default.
@@ -235,7 +235,7 @@ The window is shown by default.
 \param visible True to show the window, false to hide it
 
 </member>
-<member name="M:sf.Window.setVerticalSyncEnabled(System.Boolean)" decl="true" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="329">
+<member name="M:sf.Window.setVerticalSyncEnabled(System.Boolean)" decl="true" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="329">
 \brief Enable or disable vertical synchronization
 
 Activating vertical synchronization will limit the number
@@ -248,7 +248,7 @@ Vertical synchronization is disabled by default.
 \param enabled True to enable v-sync, false to deactivate it
 
 </member>
-<member name="M:sf.Window.setMouseCursorVisible(System.Boolean)" decl="true" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="344">
+<member name="M:sf.Window.setMouseCursorVisible(System.Boolean)" decl="true" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="344">
 \brief Show or hide the mouse cursor
 
 The mouse cursor is visible by default.
@@ -256,7 +256,7 @@ The mouse cursor is visible by default.
 \param visible True to show the mouse cursor, false to hide it
 
 </member>
-<member name="M:sf.Window.setKeyRepeatEnabled(System.Boolean)" decl="true" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="354">
+<member name="M:sf.Window.setKeyRepeatEnabled(System.Boolean)" decl="true" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="354">
 \brief Enable or disable automatic key-repeat
 
 If key repeat is enabled, you will receive repeated
@@ -268,7 +268,7 @@ Key repeat is enabled by default.
 \param enabled True to enable, false to disable
 
 </member>
-<member name="M:sf.Window.setFramerateLimit(System.UInt32)" decl="true" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="368">
+<member name="M:sf.Window.setFramerateLimit(System.UInt32)" decl="true" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="368">
 \brief Limit the framerate to a maximum fixed frequency
 
 If a limit is set, the window will use a small delay after
@@ -283,7 +283,7 @@ requesting 60).
 \param limit Framerate limit, in frames per seconds (use 0 to disable limit)
 
 </member>
-<member name="M:sf.Window.setJoystickThreshold(System.Single)" decl="true" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="385">
+<member name="M:sf.Window.setJoystickThreshold(System.Single)" decl="true" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="385">
 \brief Change the joystick threshold
 
 The joystick threshold is the value below which
@@ -294,7 +294,7 @@ The threshold value is 0.1 by default.
 \param threshold New threshold, in the range [0, 100]
 
 </member>
-<member name="M:sf.Window.setActive(System.Boolean)" decl="true" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="398">
+<member name="M:sf.Window.setActive(System.Boolean)" decl="true" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="398">
 \brief Activate or deactivate the window as the current target
        for OpenGL rendering
 
@@ -310,7 +310,7 @@ This is not to be confused with requestFocus().
 \return True if operation was successful, false otherwise
 
 </member>
-<member name="M:sf.Window.requestFocus" decl="true" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="416">
+<member name="M:sf.Window.requestFocus" decl="true" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="416">
 \brief Request the current window to be made the active
        foreground window
 
@@ -324,7 +324,7 @@ This is not to be confused with setActive().
 \see hasFocus
 
 </member>
-<member name="M:sf.Window.hasFocus" decl="true" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="432">
+<member name="M:sf.Window.hasFocus" decl="true" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="432">
 \brief Check whether the window has the input focus
 
 At any given time, only one window may have the input focus
@@ -335,7 +335,7 @@ events.
 \see requestFocus
 
 </member>
-<member name="M:sf.Window.display" decl="true" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="445">
+<member name="M:sf.Window.display" decl="true" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="445">
 \brief Display on screen what has been rendered to the window so far
 
 This function is typically called after all OpenGL rendering
@@ -343,7 +343,7 @@ has been done for the current frame, in order to show
 it on screen.
 
 </member>
-<member name="M:sf.Window.getSystemHandle" decl="true" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="455">
+<member name="M:sf.Window.getSystemHandle" decl="true" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="455">
 \brief Get the OS-specific handle of the window
 
 The type of the returned handle is sf::WindowHandle,
@@ -357,7 +357,7 @@ and \a NSWindow on OS X.
 \return System handle of the window
 
 </member>
-<member name="M:sf.Window.onCreate" decl="true" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="473">
+<member name="M:sf.Window.onCreate" decl="true" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="473">
 \brief Function called after the window has been created
 
 This function is called so that derived classes can
@@ -365,14 +365,14 @@ perform their own specific initialization as soon as
 the window is created.
 
 </member>
-<member name="M:sf.Window.onResize" decl="true" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="483">
+<member name="M:sf.Window.onResize" decl="true" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="483">
 \brief Function called after the window has been resized
 
 This function is called so that derived classes can
 perform custom actions when the size of the window changes.
 
 </member>
-<member name="M:sf.Window.filterEvent(sf.Event!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)" decl="true" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="494">
+<member name="M:sf.Window.filterEvent(sf.Event!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)" decl="true" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="494">
 \brief Processes an event before it is sent to the user
 
 This function is called every time an event is received
@@ -384,11 +384,11 @@ user.
 \param event Event to filter
 
 </member>
-<member name="M:sf.Window.initialize" decl="true" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="508">
+<member name="M:sf.Window.initialize" decl="true" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="508">
 \brief Perform some common internal initializations
 
 </member>
-<member name="T:Camera" decl="false" source="d:\mina saker\annat\visual studio projekt\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="530">
+<member name="T:Camera" decl="false" source="d:\c++ projects\proceduralchunksgit\proceduralchunks\include\sfml\window\window.hpp" line="530">
 \class sf::Window
 \ingroup window
 
