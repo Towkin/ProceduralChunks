@@ -1,7 +1,6 @@
-! Noise settings file. Use ! to comment.
-! If a value is missing, thre program will default it.
+! Noise settings file. Use '!' to comment.
+! If a value is missing, the program will default it.
 ! Value descriptions are below the values sections.
-
 
 !HeightMap values
 fHeightFrequency = 0.0000025
@@ -10,7 +9,7 @@ fHeightPersistance = 0.45
 !uHeightOctaves = 16
 uHeightOctaves = 12
 ! Comment seed to use random seed.
-uHeightSeed = 6783287
+!uHeightSeed = 6783287
 
 !DryMap values
 fDryFrequency = 0.00001
@@ -18,7 +17,7 @@ fDryLacunarity = 3.1
 fDryPersistance = 0.4
 uDryOctaves = 7
 ! Comment seed to use random seed.
-uDrySeed = 78234281
+!uDrySeed = 78234281
 
 
 
@@ -35,7 +34,7 @@ uDrySeed = 78234281
 !		Octave 4: 0.4
 !		etc...
 
-! Persistance: Determines how much each octave affects the value. 
+! Persistance: Determines how much each octave affects the output value. 
 ! Normally in range of 0...1, can be more, should not be negative.
 !	Example: With a Persistance of 0.4, and 4 Octaves:
 ! 		Octave 1: 1.000 (61.6%) 
@@ -44,9 +43,6 @@ uDrySeed = 78234281
 !		Octave 4: 0.064 (3.9%)
 
 ! Octaves: The number of runs the algorithm should do per point.
-! More octaves often means higher precision, however, does also affect performance. Normally about 8...16.
+! More octaves often means higher "precision", however, does also affect performance. Normally about 8...16.
 
-! Seed: The base seed used to scramble the hash. Remove or comment out to get seed based on time.
-
-
-
+! Seed: The base seed used to scramble the hash. Remove or comment out to use default seed, which is based on time.

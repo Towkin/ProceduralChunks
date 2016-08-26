@@ -129,6 +129,206 @@ cursor on the desktop.
 \brief Give access to the real-time state of the mouse
 
 </member>
+        <member name="M:sf.View.getInverseTransform">
+\brief Get the inverse projection transform of the view
+
+This function is meant for internal use only.
+
+\return Inverse of the projection transform defining the view
+
+\see getTransform
+
+</member>
+        <member name="M:sf.View.getTransform">
+\brief Get the projection transform of the view
+
+This function is meant for internal use only.
+
+\return Projection transform defining the view
+
+\see getInverseTransform
+
+</member>
+        <member name="M:sf.View.rotate(System.Single)">
+\brief Rotate the view relatively to its current orientation
+
+\param angle Angle to rotate, in degrees
+
+\see setRotation, move, zoom
+
+</member>
+        <member name="M:sf.View.move(sf.Vector2&lt;System.Single&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+\brief Move the view relatively to its current position
+
+\param offset Move offset
+
+\see setCenter, rotate, zoom
+
+</member>
+        <member name="M:sf.View.move(System.Single,System.Single)">
+\brief Move the view relatively to its current position
+
+\param offsetX X coordinate of the move offset
+\param offsetY Y coordinate of the move offset
+
+\see setCenter, rotate, zoom
+
+</member>
+        <member name="M:sf.View.getViewport">
+\brief Get the target viewport rectangle of the view
+
+\return Viewport rectangle, expressed as a factor of the target size
+
+\see setViewport
+
+</member>
+        <member name="M:sf.View.getRotation">
+\brief Get the current orientation of the view
+
+\return Rotation angle of the view, in degrees
+
+\see setRotation
+
+</member>
+        <member name="M:sf.View.getSize">
+\brief Get the size of the view
+
+\return Size of the view
+
+\see getCenter, setSize
+
+</member>
+        <member name="M:sf.View.getCenter">
+\brief Get the center of the view
+
+\return Center of the view
+
+\see getSize, setCenter
+
+</member>
+        <member name="M:sf.View.reset(sf.Rect&lt;System.Single&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+\brief Reset the view to the given rectangle
+
+Note that this function resets the rotation angle to 0.
+
+\param rectangle Rectangle defining the zone to display
+
+\see setCenter, setSize, setRotation
+
+</member>
+        <member name="M:sf.View.setViewport(sf.Rect&lt;System.Single&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+\brief Set the target viewport
+
+The viewport is the rectangle into which the contents of the
+view are displayed, expressed as a factor (between 0 and 1)
+of the size of the RenderTarget to which the view is applied.
+For example, a view which takes the left side of the target would
+be defined with View.setViewport(sf::FloatRect(0, 0, 0.5, 1)).
+By default, a view has a viewport which covers the entire target.
+
+\param viewport New viewport rectangle
+
+\see getViewport
+
+</member>
+        <member name="M:sf.View.setRotation(System.Single)">
+\brief Set the orientation of the view
+
+The default rotation of a view is 0 degree.
+
+\param angle New angle, in degrees
+
+\see getRotation
+
+</member>
+        <member name="M:sf.View.setSize(sf.Vector2&lt;System.Single&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+\brief Set the size of the view
+
+\param size New size
+
+\see setCenter, getCenter
+
+</member>
+        <member name="M:sf.View.setSize(System.Single,System.Single)">
+\brief Set the size of the view
+
+\param width  New width of the view
+\param height New height of the view
+
+\see setCenter, getCenter
+
+</member>
+        <member name="M:sf.View.setCenter(sf.Vector2&lt;System.Single&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+\brief Set the center of the view
+
+\param center New center
+
+\see setSize, getCenter
+
+</member>
+        <member name="M:sf.View.setCenter(System.Single,System.Single)">
+\brief Set the center of the view
+
+\param x X coordinate of the new center
+\param y Y coordinate of the new center
+
+\see setSize, getCenter
+
+</member>
+        <member name="M:sf.View.#ctor(sf.Vector2&lt;System.Single&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,sf.Vector2&lt;System.Single&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+\brief Construct the view from its center and size
+
+\param center Center of the zone to display
+\param size   Size of zone to display
+
+</member>
+        <member name="M:sf.View.#ctor(sf.Rect&lt;System.Single&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+\brief Construct the view from a rectangle
+
+\param rectangle Rectangle defining the zone to display
+
+</member>
+        <member name="M:sf.View.#ctor">
+\brief Default constructor
+
+This constructor creates a default view of (0, 0, 1000, 1000)
+
+</member>
+        <member name="T:sf.View">
+\brief 2D camera that defines what region is shown on screen
+
+</member>
+        <member name="M:Noise.Perlin(System.Single*,System.UInt32,System.Single,System.UInt32,System.UInt32,System.Single,System.Single)">
+            <summary>Complex Perlin Noise method, calling multiple noise functions and returning the sum in range [-1...1].</summary>
+            <param name="aCoords">A C-style array containing the coordinates to calculate noise for. Must contain at least as many elements as aDimensions.</param>
+            <param name="aDimensions">The number of dimensions to do Perlin Noise in, can be [1], [2] or [3].</param>
+            <param name="aFrequency">The frequency of the first "wave". Hgih frequency = Noisy. Is used as base for later octaves.</param>
+            <param name="aOctaves">The number of noise calculations to run on this spot.</param>
+            <param name="aSeed">The seed to use when calculating each octave of noise. Note: each seed generates it's own hash-set, avoid switching too often in runtime.</param>
+            <param name="aLacunarity">A multiplier, multiplying the last frequency once per octave.</param>
+            <param name="aPersistance">How much each additional octave after the first matters.</param>
+        </member>
+        <member name="F:Noise.sSqrt2">
+            <summary>Precalculated constant of the square root of 2.</summary>
+        </member>
+        <member name="M:Noise.IntFloorFast(System.Single)">
+            <summary>Fast float to int mathematically correct floor conversion. Works with any float value in integer range.</summary>
+            <param name="x">The float value to be floored and converted to int.</param>
+        </member>
+        <member name="M:Noise.Lerp(System.Single,System.Single,System.Single)">
+            <summary>Simple unclamped linear interpolation.</summary>
+            <param name="a">Value at t = 0.</param>
+            <param name="b">Value at t = 1.</param>
+            <param name="t">Interpolation alpha.</param>
+        </member>
+        <member name="M:Noise.Smooth(System.Single)">
+            <summary>Smoothing method to smooth values in range [0...1], using the polynomial function f(x) = 6x^5 - 15x^4 + 10x^3.</summary>
+            <param name="x">Input value to smooth.</param>
+        </member>
+        <member name="T:Noise">
+            <summary />
+            <param name="" />
+        </member>
         <member name="T:Camera">
 \class sf::Window
 \ingroup window
@@ -574,206 +774,6 @@ use the other constructors or call create() to do so.
 \brief Window that serves as a target for OpenGL rendering
 
 </member>
-        <member name="M:sf.View.getInverseTransform">
-\brief Get the inverse projection transform of the view
-
-This function is meant for internal use only.
-
-\return Inverse of the projection transform defining the view
-
-\see getTransform
-
-</member>
-        <member name="M:sf.View.getTransform">
-\brief Get the projection transform of the view
-
-This function is meant for internal use only.
-
-\return Projection transform defining the view
-
-\see getInverseTransform
-
-</member>
-        <member name="M:sf.View.rotate(System.Single)">
-\brief Rotate the view relatively to its current orientation
-
-\param angle Angle to rotate, in degrees
-
-\see setRotation, move, zoom
-
-</member>
-        <member name="M:sf.View.move(sf.Vector2&lt;System.Single&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
-\brief Move the view relatively to its current position
-
-\param offset Move offset
-
-\see setCenter, rotate, zoom
-
-</member>
-        <member name="M:sf.View.move(System.Single,System.Single)">
-\brief Move the view relatively to its current position
-
-\param offsetX X coordinate of the move offset
-\param offsetY Y coordinate of the move offset
-
-\see setCenter, rotate, zoom
-
-</member>
-        <member name="M:sf.View.getViewport">
-\brief Get the target viewport rectangle of the view
-
-\return Viewport rectangle, expressed as a factor of the target size
-
-\see setViewport
-
-</member>
-        <member name="M:sf.View.getRotation">
-\brief Get the current orientation of the view
-
-\return Rotation angle of the view, in degrees
-
-\see setRotation
-
-</member>
-        <member name="M:sf.View.getSize">
-\brief Get the size of the view
-
-\return Size of the view
-
-\see getCenter, setSize
-
-</member>
-        <member name="M:sf.View.getCenter">
-\brief Get the center of the view
-
-\return Center of the view
-
-\see getSize, setCenter
-
-</member>
-        <member name="M:sf.View.reset(sf.Rect&lt;System.Single&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
-\brief Reset the view to the given rectangle
-
-Note that this function resets the rotation angle to 0.
-
-\param rectangle Rectangle defining the zone to display
-
-\see setCenter, setSize, setRotation
-
-</member>
-        <member name="M:sf.View.setViewport(sf.Rect&lt;System.Single&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
-\brief Set the target viewport
-
-The viewport is the rectangle into which the contents of the
-view are displayed, expressed as a factor (between 0 and 1)
-of the size of the RenderTarget to which the view is applied.
-For example, a view which takes the left side of the target would
-be defined with View.setViewport(sf::FloatRect(0, 0, 0.5, 1)).
-By default, a view has a viewport which covers the entire target.
-
-\param viewport New viewport rectangle
-
-\see getViewport
-
-</member>
-        <member name="M:sf.View.setRotation(System.Single)">
-\brief Set the orientation of the view
-
-The default rotation of a view is 0 degree.
-
-\param angle New angle, in degrees
-
-\see getRotation
-
-</member>
-        <member name="M:sf.View.setSize(sf.Vector2&lt;System.Single&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
-\brief Set the size of the view
-
-\param size New size
-
-\see setCenter, getCenter
-
-</member>
-        <member name="M:sf.View.setSize(System.Single,System.Single)">
-\brief Set the size of the view
-
-\param width  New width of the view
-\param height New height of the view
-
-\see setCenter, getCenter
-
-</member>
-        <member name="M:sf.View.setCenter(sf.Vector2&lt;System.Single&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
-\brief Set the center of the view
-
-\param center New center
-
-\see setSize, getCenter
-
-</member>
-        <member name="M:sf.View.setCenter(System.Single,System.Single)">
-\brief Set the center of the view
-
-\param x X coordinate of the new center
-\param y Y coordinate of the new center
-
-\see setSize, getCenter
-
-</member>
-        <member name="M:sf.View.#ctor(sf.Vector2&lt;System.Single&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,sf.Vector2&lt;System.Single&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
-\brief Construct the view from its center and size
-
-\param center Center of the zone to display
-\param size   Size of zone to display
-
-</member>
-        <member name="M:sf.View.#ctor(sf.Rect&lt;System.Single&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
-\brief Construct the view from a rectangle
-
-\param rectangle Rectangle defining the zone to display
-
-</member>
-        <member name="M:sf.View.#ctor">
-\brief Default constructor
-
-This constructor creates a default view of (0, 0, 1000, 1000)
-
-</member>
-        <member name="T:sf.View">
-\brief 2D camera that defines what region is shown on screen
-
-</member>
-        <member name="M:Noise.Perlin(System.Single*,System.UInt32,System.Single,System.UInt32,System.UInt32,System.Single,System.Single)">
-            <summary>Complex Perlin Noise method, calling multiple noise functions and returning the sum in range [-1...1].</summary>
-            <param name="aCoords">A C-style array containing the coordinates to calculate noise for. Must contain at least as many elements as aDimensions.</param>
-            <param name="aDimensions">The number of dimensions to do Perlin Noise in, can be [1], [2] or [3].</param>
-            <param name="aFrequency">The frequency of the first "wave". Hgih frequency = Noisy. Is used as base for later octaves.</param>
-            <param name="aOctaves">The number of noise calculations to run on this spot.</param>
-            <param name="aSeed">The seed to use when calculating each octave of noise. Note: each seed generates it's own hash-set, avoid switching too often in runtime.</param>
-            <param name="aLacunarity">A multiplier, multiplying the last frequency once per octave.</param>
-            <param name="aPersistance">How much each additional octave after the first matters.</param>
-        </member>
-        <member name="F:Noise.sSqrt2">
-            <summary>Precalculated constant of the square root of 2.</summary>
-        </member>
-        <member name="M:Noise.IntFloorFast(System.Single)">
-            <summary>Fast float to int mathematically correct floor conversion. Works with any float value in integer range.</summary>
-            <param name="x">The float value to be floored and converted to int.</param>
-        </member>
-        <member name="M:Noise.Lerp(System.Single,System.Single,System.Single)">
-            <summary>Simple unclamped linear interpolation.</summary>
-            <param name="a">Value at t = 0.</param>
-            <param name="b">Value at t = 1.</param>
-            <param name="t">Interpolation alpha.</param>
-        </member>
-        <member name="M:Noise.Smooth(System.Single)">
-            <summary>Smoothing method to smooth values in range [0...1], using the polynomial function f(x) = 6x^5 - 15x^4 + 10x^3.</summary>
-            <param name="x">Input value to smooth.</param>
-        </member>
-        <member name="T:Noise">
-            <summary />
-            <param name="" />
-        </member>
         <!-- Discarding badly formed XML document comment for member 'M:sf.View.zoom(System.Single)'. -->
     </members>
 </doc>

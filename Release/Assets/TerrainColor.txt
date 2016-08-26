@@ -1,15 +1,17 @@
 
 
-!Använd '!' för att kommentera på rader.
-Det går att skriva utan '!' tecknet i början av raden, men...
-!...om du någonstans på raden vill använda tecknet '#' måste du använda '!' först i början av raden.
+!Use '!' to comment a line.
 
 !Sea types
-SeaAbyss#0b2747 Här kan jag skriva vad jag vill.
-SeaDeep#2e598b Om man skulle vilja kommentera färgen eller så dyker detta upp i konsolen.
+SeaAbyss#0b2747 You can write comments after the types.
+SeaDeep#2e598b This will show in the console.
 SeaNormal#6085b0
 SeaShallow#97beeb
 SeaTropical#8edddd
+
+!Water types
+River#9f00c6
+Lake#ff00ff
 
 !Land types
 Beach#ffff00
